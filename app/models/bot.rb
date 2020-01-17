@@ -130,6 +130,13 @@ unless exists?(tweet_id: tweet.id)
 
 			)
 			end	
+			puts tweet.text
+			puts "-----"
+			puts tweet.user.screen_name
+			puts "-----"
+			puts tweet.user.description
+			puts tweet.user.followers_count
+			puts "----------"
 			if((tweet.text.downcase.include? "mike leach") && (tweet.text.downcase.include? "hailstate")) ||
 				((tweet.text.downcase.include? "mike leach") && (tweet.text.downcase.include? "love")) ||
 				((tweet.text.downcase.include? "mike leach") && (tweet.text.downcase.include? "starkvegas")) ||
