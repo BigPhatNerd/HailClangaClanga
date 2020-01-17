@@ -1,0 +1,13 @@
+<div id="hailstate_hashtags">
+    <% cache "hailstate#{Date.today}" do %>
+    <% Bot.order("tweet_id desc").limit(10).each do |bot| %>
+    <blockquote>
+        <%=bot.content %>
+    </blockquote>
+    <div class="from">&mdash; @
+        <%= bot.screen_name %>
+    </div>
+    <br>
+    <% end %>
+    <% end %>
+</div>
