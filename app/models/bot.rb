@@ -87,12 +87,7 @@ class Bot < ApplicationRecord
     day_of_week = DateTime.now.cwday
 
     if day_of_week == 6 && weeks_until_kickoff > 1
-     CLIENT.update("#{weeks_until_kickoff} weeks until kickoff!
-     	#{weeks_until_eggbowl} weeks until Egg Bowl! 🥚🏆
-     	It's gonna be 🔥.
-
-		🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉 
-		#HailState #SwingYourSword")  
+     CLIENT.update("#{weeks_until_kickoff} weeks until kickoff!\n#{weeks_until_eggbowl} weeks until Egg Bowl! 🥚🏆\nIt's gonna be 🔥.\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")  
     elsif day_of_week == 6 && weeks_until_kickoff == 1
       CLIENT.update("#{weeks_until_kickoff} week until kickoff!
       	Time to get it done!. 
