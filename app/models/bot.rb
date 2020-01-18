@@ -67,15 +67,15 @@ class Bot < ApplicationRecord
 		day_of_week = DateTime.now.cwday
 
 		if day_of_week == 6 && weeks_until_kickoff > 1
-			CLIENT.update("#{weeks_until_kickoff} weeks until kickoff!\n#{weeks_until_eggbowl} weeks until Egg Bowl! 🥚🏆\nIt's gonna be 🔥.\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
+			CLIENT.update("#{weeks_until_kickoff} weeks (#{number_of_days} days) until kickoff!\n#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\nIt's gonna be 🔥.\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
 		elsif day_of_week == 6 && weeks_until_kickoff == 1
-			CLIENT.update("#{weeks_until_kickoff} week until kickoff!\nTime to get it done!.\n\n🐶 🏈 ⚔️🏴‍☠️ 🐮🔔 🎉\n#HailState #SwingYourSword")
+			CLIENT.update("#{weeks_until_kickoff} week (#{number_of_days}) until kickoff!\n#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl}) until Egg Bowl! 🥚🏆Time to get it done!.\n\n🐶 🏈 ⚔️🏴‍☠️ 🐮🔔 🎉\n#HailState #SwingYourSword")
 		elsif day_of_week == 6 && weeks_until_kickoff == 0
 			CLIENT.update("Game Day!!\nGet 'em 🐶's'\n\n🎉👏🍾🙌🎊🙏\n#HailState")
 		elsif day_of_week == 4 && weeks_until_kickoff < 0 && weeks_until_eggbowl > 1
-			CLIENT.update("#{weeks_until_eggbowl} weeks until Egg Bowl! 🥚🏆\nIt's gonna be 🔥. \n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
+			CLIENT.update("#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\nIt's gonna be 🔥. \n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
 		elsif weeks_until_eggbowl == 1
-			CLIENT.update("#{weeks_until_eggbowl} week until Egg Bowl! 🥚🏆\nHoly Moly.\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
+			CLIENT.update("#{weeks_until_eggbowl} week (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\nHoly Moly.\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
 		elsif weeks_until_eggbowl == 0 && day_of_week == 4
 			CLIENT.update("Happy Egg Bowl! 🥚🏆\nLeach vs Kiffin\nLet's do what we be doing!\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
 		end
@@ -115,5 +115,6 @@ class Bot < ApplicationRecord
 
 		end
 	end
+
 	
 end
