@@ -88,36 +88,42 @@ class Bot < ApplicationRecord
 
     if day_of_week == 6 && weeks_until_kickoff > 1
      CLIENT.update("#{weeks_until_kickoff} weeks until kickoff!
-	 	#{weeks_until_eggbowl} weeks until Egg Bowl! 🥚🏆
+     	#{weeks_until_eggbowl} weeks until Egg Bowl! 🥚🏆
+     	It's gonna be 🔥.
+
 		🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉 
-		It's gonna be 🔥. 
-	    #HailState #SwingYourSword")  
+		#HailState #SwingYourSword")  
     elsif day_of_week == 6 && weeks_until_kickoff == 1
       CLIENT.update("#{weeks_until_kickoff} week until kickoff!
-		🐶 🏈 ⚔️🏴‍☠️ 🐮🔔 🎉 
-		Time to get it done!. 
-		#HailState #SwingYourSword")  
+      	Time to get it done!. 
+      	
+      	🐶 🏈 ⚔️🏴‍☠️ 🐮🔔 🎉
+      	#HailState #SwingYourSword")  
     elsif day_of_week == 6 && weeks_until_kickoff == 0
       CLIENT.update("Game Day!!
-		Get 'em 🐶's'
-    	🎉👏🍾🙌🎊🙏
-		#HailState")
+      	Get 'em 🐶's'
+
+      	🎉👏🍾🙌🎊🙏
+      	#HailState")
 	elsif day_of_week == 4 && weeks_until_kickoff < 0 && weeks_until_eggbowl > 1 
-	 	CLIENT.update("#{weeks_until_eggbowl} weeks until Egg Bowl! 🥚🏆}
-		🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉 
-		It's gonna be 🔥. 
-		#HailState #SwingYourSword")
+	 	CLIENT.update("#{weeks_until_eggbowl} weeks until Egg Bowl! 🥚🏆
+	 		It's gonna be 🔥. 
+
+	 		🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉
+	 		#HailState #SwingYourSword")
 	elsif weeks_until_eggbowl == 1
-	 	CLIENT.update("#{weeks_until_eggbowl} week until Egg Bowl! 🥚🏆}
-		🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉 
-		Holy Moly. 
-		#HailState #SwingYourSword")
+	 	CLIENT.update("#{weeks_until_eggbowl} week until Egg Bowl! 🥚🏆
+	 		Holy Moly.
+
+	 		🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉
+	 		#HailState #SwingYourSword")
 	elsif weeks_until_eggbowl == 0 && day_of_week == 4
 		CLIENT.update("Happy Egg Bowl! 🥚🏆
-		Leach vs Kiffin
-		Let's do what we be doing!
-		🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉  
-		#HailState #SwingYourSword") 	 
+			Leach vs Kiffin
+			Let's do what we be doing!
+
+			🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉 
+			#HailState #SwingYourSword") 	 
     end
 
   end
