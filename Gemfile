@@ -5,6 +5,7 @@ ruby '2.5.3'
 
 gem 'twitter', '~> 5.16'
 gem 'figaro'
+gem 'sidekiq'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
