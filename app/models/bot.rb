@@ -1,7 +1,7 @@
 class Bot < ApplicationRecord
 
 	def self.hail_state_hashtag
-		CLIENT.search("#hailstate -rt", result_type: "mixed").take(20).each do |tweet|
+		CLIENT.search("#hailstate -rt", result_type: "mixed").take(10).each do |tweet|
 			unless exists?(tweet_id: tweet.id)
 				create!(
 					tweet_id: tweet.id,
@@ -18,8 +18,8 @@ class Bot < ApplicationRecord
 			screen_name = tweet.user.screen_name.downcase
 			user_description = tweet.user.description.downcase
 			if (screen_name.include? "hailstate") || 
-				(user_name.include? "hailstate") ||
-				(user_description.include? "hailstate") || (user_description.include? "mississippi state football") &&
+				(user_name.include? "hailstate") || (user_name.include? "mississippi state") ||
+			(user_description.include?"mississippi state") || (user_description.include? "hailstate") || (user_description.include? "mississippi state") &&
 				 (tweet.user.followers_count > 100) && (tweet.user.following? == false)
 
 				CLIENT.follow("#{tweet.user.screen_name}")
@@ -80,8 +80,15 @@ class Bot < ApplicationRecord
 	end
 
 	def self.friend_tweets
+		count = 0
 		CLIENT.friends.each do |friend|
+
 			friend.tweet
+			puts friend.tweet
+			puts "--------"
+			puts friend.tweet.retweeted?
+			puts "-------"
+			puts count += 1
 			unless exists?(tweet_id: friend.tweet.id)
 				create!(
 					tweet_id: friend.tweet.id,
@@ -95,8 +102,7 @@ class Bot < ApplicationRecord
 			end
 			unless friend.tweet.retweeted?
 				tweet_text = friend.tweet.text.downcase
-				if((tweet_text.include? "mike leach") && (tweet_text.include? "hailstate")) ||
-					((tweet_text.include? "mike leach") && (tweet_text.include? "love")) ||
+				if(tweet_text.include? "mike leach") || (tweet_text.include? "hailstate") ||
 					((tweet_text.include? "mike leach") && (tweet_text.include? "starkvegas")) ||
 					((tweet_text.include? "swingyoursword") && (tweet_text.include? "hailstate")) && 
 					CLIENT.retweet(friend.tweet)
@@ -106,18 +112,25 @@ class Bot < ApplicationRecord
 					(tweet_text.include? "hail state football")
 					CLIENT.retweet(friend.tweet)
 				elsif 
-					(friend.tweet.user.screen_name == "@Coach_Leach")
+					(friend.tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach")
+					(tweet_text.include? "Coach Leach")
+					CLIENT.retweet(friend.tweet)
+				elsif 
+					(tweet_text.include? "#gthom")
 					CLIENT.retweet(friend.tweet)
 				end
 			end
 
 		end
+	
+	
 	end
 	def self.testing
-		#CLIENT.update('Nice work @NordicTrack', attachment_url: 'https://twitter.com/liftrunlong/status/1214301822896226304')
-		CLIENT.search("Hail+State OR Willie+Nelson").take(5).each do |tweet|
-puts tweet.url
-		end
+		CLIENT.search("Mike Leach #hailstate -rt", result_type: "popular").take(10).each do |tweet|
+			if (tweet.text.downcase.include? "mike leach") && (!tweet.retweeted?)
+				CLIENT.retweet(tweet)
+			end
+end
 	end
 
 	

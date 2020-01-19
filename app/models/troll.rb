@@ -1,11 +1,4 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-class AddInitialBots < ActiveRecord::Migration[5.0]
+class Troll < ApplicationRecord
 Troll.create(message: "Y'all remember when Ole Miss had the #1 recruiting class in the country? That strategy seemed to work.")
 Troll.create(message: "Ole Miss be like: \"LSU and Alabama are our rivals.\"\nOrgeron and Saban: {uncertain if they play Mississippi this year.}\n #LandShart #rebelbearfishchancellorchewbacca")
 Troll.create(message: "All the pennies in all the loafers. Cardigans for the win. Bearsharts still losing.\n #HailState #DadSendMoney #WeNeverLoseAPartyRemember")
