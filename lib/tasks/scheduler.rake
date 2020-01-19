@@ -7,7 +7,7 @@ end
 
 desc "Looks for Mike Leach tweets to follow"
 task mike_leach_search: :environment do
-  puts "Searching for #hailstate tweets..."
+  puts "Searching for Mike Leach tweets..."
   Bot.mike_leach_hashtag
   puts "Search performed!"
 end

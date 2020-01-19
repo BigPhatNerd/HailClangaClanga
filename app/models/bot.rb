@@ -17,13 +17,10 @@ class Bot < ApplicationRecord
 			user_name = tweet.user.name.downcase
 			screen_name = tweet.user.screen_name.downcase
 			user_description = tweet.user.description.downcase
-			if ((screen_name.include? "hailstate") &&
-				(user_name.include? "football")) || ((screen_name.include? "hailstate") &&
-				(user_name.include? "hailstate")) ||((screen_name.include? "football") &&
-				(user_name.include? "hailstate"))|| ((screen_name.include? "football") &&
-				(screen_name.include? "hailstate")) || ((user_description.include? "football") &&
-				(user_description.include? "hailstate")) &&
-				(tweet.user.followers_count > 250) && (tweet.user.following? == false)
+			if (screen_name.include? "hailstate") || 
+				(user_name.include? "hailstate") ||
+				(user_description.include? "hailstate") || (user_description.include? "mississippi state football")
+				&& (tweet.user.followers_count > 100) && (tweet.user.following? == false)
 
 				CLIENT.follow("#{tweet.user.screen_name}")
 			else
@@ -50,8 +47,8 @@ class Bot < ApplicationRecord
 			if((text.include? "mike leach") && (text.include? "hailstate")) ||
 				((text.include? "mike leach") && (text.include? "love")) ||
 				((text.include? "mike leach") && (text.include? "starkvegas")) ||
-				((text.include? "swingyoursword") && (text.include? "hailstate"))
-
+				((text.include? "swingyoursword") && (text.include? "hailstate")) ||
+				((text.include? "mike leach") && (text.include? "air raid")) 
 				CLIENT.follow("#{tweet.user.screen_name}")
 			end
 		end
@@ -105,7 +102,8 @@ class Bot < ApplicationRecord
 					CLIENT.retweet(friend.tweet)
 				elsif
 					((tweet_text.include? "hailstate") &&
-						(tweet_text.include? "football"))
+						(tweet_text.include? "football")) || (tweet_text.include? " mississippi state football") ||
+					(tweet_text.include? "hail state football")
 					CLIENT.retweet(friend.tweet)
 				elsif 
 					(friend.tweet.user.screen_name == "@Coach_Leach")
