@@ -1,7 +1,7 @@
 class Bot < ApplicationRecord
 
 	def self.hail_state_hashtag
-		CLIENT.search("#hailstate -rt", since_id: maximum(:tweet_id), result_type: "mixed").take(10).each do |tweet|
+		CLIENT.search("#hailstate -rt", result_type: "mixed").take(20).each do |tweet|
 			unless exists?(tweet_id: tweet.id)
 				create!(
 					tweet_id: tweet.id,
@@ -31,7 +31,7 @@ class Bot < ApplicationRecord
 
 
 	def self.mike_leach_hashtag
-		CLIENT.search("Mike Leach #hailstate -rt", since_id: maximum(:tweet_id), result_type: "popular").take(10).each do |tweet|
+		CLIENT.search("Mike Leach #hailstate -rt", result_type: "popular").take(20).each do |tweet|
 			unless exists?(tweet_id: tweet.id)
 				create!(
 					tweet_id: tweet.id,
