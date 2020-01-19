@@ -19,8 +19,8 @@ class Bot < ApplicationRecord
 			user_description = tweet.user.description.downcase
 			if (screen_name.include? "hailstate") || 
 				(user_name.include? "hailstate") ||
-				(user_description.include? "hailstate") || (user_description.include? "mississippi state football")
-				&& (tweet.user.followers_count > 100) && (tweet.user.following? == false)
+				(user_description.include? "hailstate") || (user_description.include? "mississippi state football") &&
+				 (tweet.user.followers_count > 100) && (tweet.user.following? == false)
 
 				CLIENT.follow("#{tweet.user.screen_name}")
 			else
@@ -111,6 +111,12 @@ class Bot < ApplicationRecord
 				end
 			end
 
+		end
+	end
+	def self.testing
+		#CLIENT.update('Nice work @NordicTrack', attachment_url: 'https://twitter.com/liftrunlong/status/1214301822896226304')
+		CLIENT.search("Hail+State OR Willie+Nelson").take(5).each do |tweet|
+puts tweet.url
 		end
 	end
 
