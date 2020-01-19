@@ -19,15 +19,14 @@ class Bot < ApplicationRecord
 			user_description = tweet.user.description.downcase
 			if (screen_name.include? "hailstate") || 
 				(user_name.include? "hailstate") || (user_name.include? "mississippi state") ||
-			(user_description.include?"mississippi state") || (user_description.include? "hailstate") || (user_description.include? "mississippi state") &&
-				 (tweet.user.followers_count > 100) && (tweet.user.following? == false)
+				(user_description.include?"mississippi state") || (user_description.include? "hailstate") || (user_description.include? "mississippi state") &&
+				(tweet.user.followers_count > 100) && (tweet.user.following? == false)
 
 				CLIENT.follow("#{tweet.user.screen_name}")
 			else
 			end
 		end
 	end
-
 
 
 	def self.mike_leach_hashtag
@@ -68,7 +67,7 @@ class Bot < ApplicationRecord
 		elsif day_of_week == 6 && weeks_until_kickoff == 1
 			CLIENT.update("#{weeks_until_kickoff} week (#{number_of_days}) until kickoff!\n#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl}) until Egg Bowl! 🥚🏆Time to get it done!.\n\n🐶 🏈 ⚔️🏴‍☠️ 🐮🔔 🎉\n#HailState #SwingYourSword")
 		elsif day_of_week == 6 && weeks_until_kickoff == 0
-			CLIENT.update("Game Day!!\nGet 'em 🐶's'\n\n🎉👏🍾🙌🎊🙏\n#HailState")
+			CLIENT.update("Game Day!!\nGet 'em 🐶's\n\n🎉👏🍾🙌🎊🙏\n#HailState")
 		elsif day_of_week == 4 && weeks_until_kickoff < 0 && weeks_until_eggbowl > 1
 			CLIENT.update("#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\nIt's gonna be 🔥. \n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
 		elsif weeks_until_eggbowl == 1
@@ -104,7 +103,7 @@ class Bot < ApplicationRecord
 				tweet_text = friend.tweet.text.downcase
 				if(tweet_text.include? "mike leach") || (tweet_text.include? "hailstate") ||
 					((tweet_text.include? "mike leach") && (tweet_text.include? "starkvegas")) ||
-					((tweet_text.include? "swingyoursword") && (tweet_text.include? "hailstate")) && 
+					((tweet_text.include? "swingyoursword") && (tweet_text.include? "hailstate"))  
 					CLIENT.retweet(friend.tweet)
 				elsif
 					((tweet_text.include? "hailstate") &&
@@ -122,16 +121,23 @@ class Bot < ApplicationRecord
 			end
 
 		end
-	
-	
+
+
 	end
 	def self.testing
-		CLIENT.search("Mike Leach #hailstate -rt", result_type: "popular").take(10).each do |tweet|
-			if (tweet.text.downcase.include? "mike leach") && (!tweet.retweeted?)
-				CLIENT.retweet(tweet)
+		CLIENT.search("Mike Leach #hailstate -rt", result_type: "popular").take(5).each do |tweet|
+			
+				if (tweet.text.downcase.include? "mike leach")
+					begin
+					CLIENT.retweet(tweet)
+					puts tweet.retweeted?
+				rescue Twitter::Error::Forbidden
+				else
+					puts "Already retweeted"
+				end
 			end
-end
+
+		end
 	end
 
-	
 end
