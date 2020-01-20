@@ -16,6 +16,7 @@ class Bot < ApplicationRecord
 					retweets: tweet.retweet_count,
 					)
 			end
+			puts tweet.text
 
 			user_name = tweet.user.name.downcase
 			screen_name = tweet.user.screen_name.downcase
@@ -29,12 +30,13 @@ puts "Follow person with #HailState tweet"
 				CLIENT.follow("#{tweet.user.screen_name}")
 			else
 			end
+			puts "DID NOT FOLLOW"
 		end
 	end
 
 
 	def self.mike_leach_hashtag
-		CLIENT.search("Mike Leach #hailstate -rt", result_type: "popular").take(20).each do |tweet|
+		CLIENT.search("Mike Leach #hailstate -rt", result_type: "mixed").take(10).each do |tweet|
 			unless exists?(tweet_id: tweet.id)
 				create!(
 					tweet_id: tweet.id,
@@ -46,16 +48,25 @@ puts "Follow person with #HailState tweet"
 					retweets: tweet.retweet_count,
 					)
 			end
+			puts tweet.text
 			text = tweet.text.downcase
-			if((text.include? "mike leach") && (text.include? "hailstate")) ||
+			if(((text.include? "mike leach") && (text.include? "hailstate")) ||
+				((text.include? "@coach_leach") && (text.include? "#hailstate")) ||
 				((text.include? "mike leach") && (text.include? "love")) ||
+				((text.include? "@coach_leach") && (text.include? "love")) ||
 				((text.include? "mike leach") && (text.include? "starkvegas")) ||
+				((text.include? "@coach_leach") && (text.include? "starkvegas")) ||
+				((text.include? "mike leach") && (text.include? "air raid")) ||
+				((text.include? "@coach_leach") && (text.include? "air raid")) ||
 				((text.include? "swingyoursword") && (text.include? "hailstate")) ||
-				((text.include? "mike leach") && (text.include? "air raid")) 
+				((text.include? "pirate") && (text.include? "hailstate")))  
 				puts "Follow person with Mike Leach tweet"
 				puts "________________________"
 				CLIENT.follow("#{tweet.user.screen_name}")
+			else
+				puts "DID NOT FOLLOW"
 			end
+			
 		end
 	end
 
