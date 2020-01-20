@@ -24,7 +24,8 @@ class Bot < ApplicationRecord
 				(user_name.include? "hailstate") || (user_name.include? "mississippi state") ||
 				(user_description.include?"mississippi state") || (user_description.include? "hailstate") || (user_description.include? "mississippi state") &&
 				(tweet.user.followers_count > 100) && (tweet.user.following? == false)
-
+puts "Follow person with #HailState tweet"
+				puts "________________________"
 				CLIENT.follow("#{tweet.user.screen_name}")
 			else
 			end
@@ -51,6 +52,8 @@ class Bot < ApplicationRecord
 				((text.include? "mike leach") && (text.include? "starkvegas")) ||
 				((text.include? "swingyoursword") && (text.include? "hailstate")) ||
 				((text.include? "mike leach") && (text.include? "air raid")) 
+				puts "Follow person with Mike Leach tweet"
+				puts "________________________"
 				CLIENT.follow("#{tweet.user.screen_name}")
 			end
 		end
@@ -86,7 +89,7 @@ class Bot < ApplicationRecord
 		CLIENT.friends.each do |friend|
 
 			friend.tweet
-			puts friend.tweet
+			puts friend.tweet.text
 			puts "--------"
 			puts friend.tweet.retweeted?
 			puts "-------"
@@ -104,7 +107,7 @@ class Bot < ApplicationRecord
 			end
 			unless friend.tweet.retweeted?
 				tweet_text = friend.tweet.text.downcase
-			if (friend.in_reply_to_status = nil)
+			if (friend.tweet.in_reply_to_status_id? == false)
 				if(tweet_text.include? "mike leach") || (tweet_text.include? "hailstate") ||
 					((tweet_text.include? "mike leach") && (tweet_text.include? "starkvegas")) ||
 					((tweet_text.include? "swingyoursword") && (tweet_text.include? "hailstate"))  
@@ -140,62 +143,6 @@ class Bot < ApplicationRecord
 
 
 	end
-	def self.testing
-		count = 0
-		CLIENT.friends.take(3).each do |friend|
-
-			friend.tweet
-			puts friend.tweet
-			puts "--------"
-			puts friend.tweet.retweeted?
-			puts "-------"
-			puts count += 1
-			unless exists?(tweet_id: friend.tweet.id)
-				create!(
-					tweet_id: friend.tweet.id,
-					content: friend.tweet.text,
-					screen_name: friend.tweet.user.screen_name,
-					followers_count: friend.tweet.user.followers_count,
-					description: friend.tweet.user.description,
-					user_id: friend.tweet.user.id,
-					retweets: friend.tweet.retweet_count,
-					)
-			end
-			unless friend.tweet.retweeted?
-				tweet_text = friend.tweet.text.downcase
-				if(tweet_text.include? "mike leach") || (tweet_text.include? "hailstate") ||
-					((tweet_text.include? "mike leach") && (tweet_text.include? "starkvegas")) ||
-					((tweet_text.include? "swingyoursword") && (tweet_text.include? "hailstate"))  
-					puts "RETWEETED"
-					puts "------------"
-					CLIENT.retweet(friend.tweet)
-				elsif
-					((tweet_text.include? "hailstate") &&
-						(tweet_text.include? "football")) || (tweet_text.include? " mississippi state football") ||
-					(tweet_text.include? "hail state football")
-					puts "RETWEETED"
-					puts "------------"
-					CLIENT.retweet(friend.tweet)
-				elsif 
-					(friend.tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach")
-					(tweet_text.include? "Coach Leach")
-					puts "RETWEETED"
-					puts "------------"
-					CLIENT.retweet(friend.tweet)
-				elsif 
-					(tweet_text.include? "#gthom")
-					puts "RETWEETED"
-					puts "------------"
-					CLIENT.retweet(friend.tweet)
-				else
-					puts "NOT RETWEETED FOR WHATEVER REASON"
-					puts "-----------------"
-				end
-			end
-
-		end
-
-
-	end
+	
 
 end
