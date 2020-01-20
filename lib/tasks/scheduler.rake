@@ -19,10 +19,10 @@ task countdown_to_kickoff: :environment do
   puts "Countdown Tweeted!"
 end
 
-desc "Re-tweeting those that I follow."
-task retweet_friend_tweets: :environment do
-  puts "Retweeting friend's tweets..."
-  Bot.friend_tweets
+desc "Re-tweeting Good Tweets."
+task tweets_to_retweet: :environment do
+  puts "Retweeting State tweets..."
+  Bot.retweet
   puts "Re-tweeted those that I follow!"
 end
 

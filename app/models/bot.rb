@@ -4,7 +4,7 @@ class Bot < ApplicationRecord
 
 
 	def self.hail_state_hashtag
-		CLIENT.search("#hailstate -rt", result_type: "mixed").take(10).each do |tweet|
+		CLIENT.search("#hailstate -rt", result_type: "mixed").take(20).each do |tweet|
 			unless exists?(tweet_id: tweet.id)
 				create!(
 					tweet_id: tweet.id,
@@ -36,7 +36,7 @@ puts "Follow person with #HailState tweet"
 
 
 	def self.mike_leach_hashtag
-		CLIENT.search("Mike Leach #hailstate -rt", result_type: "mixed").take(10).each do |tweet|
+		CLIENT.search("Mike Leach #hailstate -rt", result_type: "mixed").take(20).each do |tweet|
 			unless exists?(tweet_id: tweet.id)
 				create!(
 					tweet_id: tweet.id,
@@ -95,65 +95,188 @@ puts "Follow person with #HailState tweet"
 
 	end
 
-	def self.friend_tweets
+	def self.retweet
 		count = 0
-		CLIENT.friends.each do |friend|
+		CLIENT.search("#hailstate", since_id: maximum(:tweet_id)).take(20).each do |tweet|
 
-			friend.tweet
-			puts friend.tweet.text
+			puts "Name: #{tweet.user.name}"
 			puts "--------"
-			puts friend.tweet.retweeted?
+			puts "Screen Name: #{tweet.user.screen_name}"
+			puts "---------"
+			puts "Tweet text: #{tweet.text}"
+			puts "--------"
+			puts "Retweet Count: #{tweet.retweet_count}"
+			puts "--------"
+			puts "Favorites Count: #{tweet.favorite_count}"
 			puts "-------"
+			puts "I have already retweeted this? #{tweet.retweeted?}"
 			puts count += 1
-			unless exists?(tweet_id: friend.tweet.id)
+			unless exists?(tweet_id: tweet.id)
 				create!(
-					tweet_id: friend.tweet.id,
-					content: friend.tweet.text,
-					screen_name: friend.tweet.user.screen_name,
-					followers_count: friend.tweet.user.followers_count,
-					description: friend.tweet.user.description,
-					user_id: friend.tweet.user.id,
-					retweets: friend.tweet.retweet_count,
+					tweet_id: tweet.id,
+					content: tweet.text,
+					screen_name: tweet.user.screen_name,
+					followers_count: tweet.user.followers_count,
+					description: tweet.user.description,
+					user_id: tweet.user.id,
+					retweets: tweet.retweet_count,
 					)
 			end
-			unless friend.tweet.retweeted?
-				tweet_text = friend.tweet.text.downcase
-			if (friend.tweet.in_reply_to_status_id? == false)
-				if(tweet_text.include? "mike leach") || (tweet_text.include? "hailstate") ||
+
+
+			 
+				tweet_text = tweet.text.downcase
+				
+			if (tweet.in_reply_to_status_id? == false)
+				if((tweet_text.include? "mike leach") && (tweet_text.include? "hailstate")) ||
 					((tweet_text.include? "mike leach") && (tweet_text.include? "starkvegas")) ||
 					((tweet_text.include? "swingyoursword") && (tweet_text.include? "hailstate"))  
 					puts "RETWEETED"
 					puts "------------"
-					CLIENT.retweet(friend.tweet)
+					begin
+					CLIENT.retweet(tweet)
+				rescue
+					Twitter::Error::Forbidden
+				end
 				elsif
 					((tweet_text.include? "hailstate") &&
 						(tweet_text.include? "football")) || (tweet_text.include? " mississippi state football") ||
-					(tweet_text.include? "hail state football")
+					(tweet_text.include? "hail state football") || (tweet_text.include? "hailstate football")
 					puts "RETWEETED"
 					puts "------------"
-					CLIENT.retweet(friend.tweet)
+					begin
+					CLIENT.retweet(tweet)
+				rescue
+					Twitter::Error::Forbidden
+				end
 				elsif 
-					(friend.tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach")
+					(tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach")
 					(tweet_text.include? "Coach Leach")
 					puts "RETWEETED"
 					puts "------------"
-					CLIENT.retweet(friend.tweet)
+					begin
+					CLIENT.retweet(tweet)
+				rescue
+					Twitter::Error::Forbidden
+				end
 				elsif 
 					(tweet_text.include? "#gthom")
 					puts "RETWEETED"
 					puts "------------"
-					CLIENT.retweet(friend.tweet)
+					begin
+					CLIENT.retweet(tweet)
+				rescue
+				end
+				elsif 
+					((tweet_text.include? "kylin") && (tweet_text.include? "hailstate")) ||
+					((tweet_text.include? "kylin") && (tweet_text.include? "mississippi state")) ||
+					((tweet_text.include? "chauncey") && (tweet_text.include? "hailstate")) ||
+					((tweet_text.include? "chauncey") && (tweet_text.include? "mississippi state")) ||
+					((tweet_text.include? "darryl williams") && (tweet_text.include? "hailstate")) ||
+					((tweet_text.include? "darryl williams") && (tweet_text.include? "mississippi state")) ||
+					((tweet_text.include? "osirus") && (tweet_text.include? "hailstate")) ||
+					((tweet_text.include? "osirus") && (tweet_text.include? "mississippi state")) ||
+					((tweet_text.include? "stephen guidry") && (tweet_text.include? "hailstate")) ||
+					((tweet_text.include? "stephen guidry") && (tweet_text.include? "mississippi state"))
+					puts "RETWEETED"
+					puts "------------"
+					begin
+						CLIENT.retweet(tweet)
+					rescue
+					end
+
 				else
 					puts "NOT RETWEETED FOR WHATEVER REASON"
 					puts "-----------------"
 				end
 			end
-			end
+			
 
 		end
 
 
 	end
+
+	def self.test
+		count = 0
+		CLIENT.search("#hailstate", since_id: maximum(:tweet_id)).take(5).each do |tweet|
+
+			puts "Name: #{tweet.user.name}"
+			puts "--------"
+			puts "Screen Name: #{tweet.user.screen_name}"
+			puts "---------"
+			puts "Tweet text: #{tweet.text}"
+			puts "--------"
+			puts "Retweet Count: #{tweet.retweet_count}"
+			puts "--------"
+			puts "Favorites Count: #{tweet.favorite_count}"
+			puts "-------"
+			puts count += 1
+			unless exists?(tweet_id: tweet.id)
+				create!(
+					tweet_id: tweet.id,
+					content: tweet.text,
+					screen_name: tweet.user.screen_name,
+					followers_count: tweet.user.followers_count,
+					description: tweet.user.description,
+					user_id: tweet.user.id,
+					retweets: tweet.retweet_count,
+					)
+			end
+			 puts "HAS THIS TWEET BEEN RETWEETED?  #{tweet.retweeted?}"
+				tweet_text = tweet.text.downcase
+				byebug
+			if (tweet.in_reply_to_status_id? == false && tweet.retweeted? == false)
+				if((tweet_text.include? "mike leach") && (tweet_text.include? "hailstate")) ||
+					((tweet_text.include? "mike leach") && (tweet_text.include? "starkvegas")) ||
+					((tweet_text.include? "swingyoursword") && (tweet_text.include? "hailstate"))  
+					puts "RETWEETED"
+					puts "------------"
+					#CLIENT.retweet(tweet)
+				elsif
+					((tweet_text.include? "hailstate") &&
+						(tweet_text.include? "football")) || (tweet_text.include? " mississippi state football") ||
+					(tweet_text.include? "hail state football") || (tweet_text.include? "hailstate football")
+					puts "RETWEETED"
+					puts "------------"
+					#CLIENT.retweet(tweet)
+				elsif 
+					(tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach")
+					(tweet_text.include? "Coach Leach")
+					puts "RETWEETED"
+					puts "------------"
+					#CLIENT.retweet(tweet)
+				elsif 
+					(tweet_text.include? "#gthom")
+					puts "RETWEETED"
+					puts "------------"
+					#CLIENT.retweet(tweet)
+				elsif 
+					((tweet_text.include? "kylin") && (tweet_text.include? "hailstate")) ||
+					((tweet_text.include? "kylin") && (tweet_text.include? "mississippi state")) ||
+					((tweet_text.include? "chauncey") && (tweet_text.include? "hailstate")) ||
+					((tweet_text.include? "chauncey") && (tweet_text.include? "mississippi state")) ||
+					((tweet_text.include? "darryl williams") && (tweet_text.include? "hailstate")) ||
+					((tweet_text.include? "darryl williams") && (tweet_text.include? "mississippi state")) ||
+					((tweet_text.include? "osirus") && (tweet_text.include? "hailstate")) ||
+					((tweet_text.include? "osirus") && (tweet_text.include? "mississippi state")) ||
+					((tweet_text.include? "stephen guidry") && (tweet_text.include? "hailstate")) ||
+					((tweet_text.include? "stephen guidry") && (tweet_text.include? "mississippi state"))
+
+				else
+					puts "NOT RETWEETED FOR WHATEVER REASON"
+					puts "-----------------"
+				end
+			end
+			
+
+		end
+
+
+	end
+
+
 	
 
 end
+
