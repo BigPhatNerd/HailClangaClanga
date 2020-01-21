@@ -5,7 +5,7 @@ class Bot < ApplicationRecord
 
   def self.hail_state_hashtag
     count = 0
-    CLIENT.search("#hailstate -rt", result_type: "mixed").take(20).each do |tweet|
+    CLIENT.search("#hailstate -rt", result_type: "mixed").take(2).each do |tweet|
       unless exists?(tweet_id: tweet.id)
         create!(
           tweet_id: tweet.id,
@@ -49,7 +49,7 @@ class Bot < ApplicationRecord
 
   def self.mike_leach_hashtag
     count = 0
-    CLIENT.search("Mike Leach #hailstate -rt", result_type: "mixed").take(20).each do |tweet|
+    CLIENT.search("Mike Leach #hailstate -rt", result_type: "mixed").take(2).each do |tweet|
       unless exists?(tweet_id: tweet.id)
         create!(
           tweet_id: tweet.id,
@@ -114,18 +114,23 @@ class Bot < ApplicationRecord
   end
 
   def self.retweet
-    count = 0
-    CLIENT.search("#hailstate", since_id: maximum(:tweet_id)).take(20).each do |tweet|
-
-      puts "Name: #{tweet.user.name}"
-      puts "________________________"			puts "Screen Name: #{tweet.user.screen_name}"
-      puts "________________________"			puts "Tweet text: #{tweet.text}"
-      puts "________________________"			puts "Retweet Count: #{tweet.retweet_count}"
-      puts "________________________"			puts "Favorites Count: #{tweet.favorite_count}"
-      puts "________________________"			puts "I have already retweeted this? #{tweet.retweeted?}"
-      puts count += 1
-      puts "Count is: #{count}"
-      puts "________________________"
+    
+    CLIENT.search("#hailstate", since_id: maximum(:tweet_id)).take(2).each do |tweet|
+    	count = 0
+      puts "Name: #{tweet.user.name}\n
+      ________________________\n			
+      Screen Name: #{tweet.user.screen_name}\n
+      ________________________\n			
+      Tweet text: #{tweet.text}\n
+      ________________________\n			
+      Retweet Count: #{tweet.retweet_count}\n
+      ________________________			
+      Favorites Count: #{tweet.favorite_count}\n
+      ________________________\n			
+      I have already retweeted this? #{tweet.retweeted?}\n
+      ----------------------------------\n
+      Count is: #{count}\n
+      ________________________"
       unless exists?(tweet_id: tweet.id)
         create!(
           tweet_id: tweet.id,
@@ -137,66 +142,59 @@ class Bot < ApplicationRecord
           retweets: tweet.retweet_count,
         )
       end
-
-
-
+      count += 1
       tweet_text = tweet.text.downcase
-
       if (tweet.in_reply_to_status_id? == false)
-        if((tweet_text.include? "mike leach") && (tweet_text.include? "hailstate")) ||
+        if ((tweet_text.include? "mike leach") && (tweet_text.include? "hailstate")) ||
             ((tweet_text.include? "mike leach") && (tweet_text.include? "starkvegas")) ||
             ((tweet_text.include? "swingyoursword") && (tweet_text.include? "hailstate"))
-          puts "RETWEETED"
-          puts "________________________"
+          puts "RETWEETED\n
+          ________________________"
           begin
             CLIENT.retweet(tweet)
           rescue
-            puts "********************"
-            puts "NEEDED TO BE RESCUED"
-            puts "*********************"
+            puts "********************\n
+            NEEDED TO BE RESCUED\n
+            *********************"
             Twitter::Error::Forbidden
           end
-        elsif
-          ((tweet_text.include? "hailstate") &&
+        elsif ((tweet_text.include? "hailstate") &&
           (tweet_text.include? "football")) || (tweet_text.include? " mississippi state football") ||
             (tweet_text.include? "hail state football") || (tweet_text.include? "hailstate football")
-          puts "RETWEETED"
-          puts "________________________"
+          puts "RETWEETED\n
+         ________________________"
           begin
             CLIENT.retweet(tweet)
           rescue
-            puts "********************"
-            puts "NEEDED TO BE RESCUED"
-            puts "*********************"
+            puts "********************\n
+            NEEDED TO BE RESCUED\n
+            *********************"
             Twitter::Error::Forbidden
           end
-        elsif
-          (tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach")
+        elsif (tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach")
           (tweet_text.include? "Coach Leach")
-          puts "RETWEETED"
-          puts "________________________"
+          puts "RETWEETED\n
+          ________________________"
           begin
             CLIENT.retweet(tweet)
           rescue
-            puts "********************"
-            puts "NEEDED TO BE RESCUED"
-            puts "*********************"
+            puts "********************\n
+            NEEDED TO BE RESCUED\n
+            *********************"
             Twitter::Error::Forbidden
           end
-        elsif
-          (tweet_text.include? "#gthom")
-          puts "RETWEETED"
-          puts "________________________"
+        elsif (tweet_text.include? "#gthom")
+          puts "RETWEETED\n
+          ________________________"
           begin
             CLIENT.retweet(tweet)
           rescue
-            puts "********************"
-            puts "NEEDED TO BE RESCUED"
-            puts "*********************"
+            puts "********************
+            NEEDED TO BE RESCUED\n
+            *********************"
             Twitter::Error::Forbidden
           end
-        elsif
-          ((tweet_text.include? "kylin") && (tweet_text.include? "hailstate")) ||
+        elsif ((tweet_text.include? "kylin") && (tweet_text.include? "hailstate")) ||
             ((tweet_text.include? "kylin") && (tweet_text.include? "mississippi state")) ||
             ((tweet_text.include? "chauncey") && (tweet_text.include? "hailstate")) ||
             ((tweet_text.include? "chauncey") && (tweet_text.include? "mississippi state")) ||
@@ -206,30 +204,33 @@ class Bot < ApplicationRecord
             ((tweet_text.include? "osirus") && (tweet_text.include? "mississippi state")) ||
             ((tweet_text.include? "stephen guidry") && (tweet_text.include? "hailstate")) ||
             ((tweet_text.include? "stephen guidry") && (tweet_text.include? "mississippi state"))
-          puts "RETWEETED"
-          puts "________________________"
+          puts "RETWEETED\n
+          ________________________"
           begin
             CLIENT.retweet(tweet)
           rescue
-            puts "********************"
-            puts "NEEDED TO BE RESCUED"
-            puts "*********************"
+            puts "********************\n
+            NEEDED TO BE RESCUED\n
+            *********************"
             Twitter::Error::Forbidden
           end
-
         else
-          puts "*******NOT RETWEETED******"
-          puts "________________________"
+          puts "*******NOT RETWEETED******\n
+          ________________________"
         end
       end
-
-
     end
-
-
   end
 
+def self.test
+	x = CLIENT.status(1219663842881540096)
+      puts "#{x.text}\n
+      ________________________\n
+      This is the tweet id: #{x.id}\n
+      ________________________"
 
+CLIENT.update("@#{x.user.screen_name} Why won't my damn giphy play in a loop? @JoePFerguson @ThirstyRunner https://media.giphy.com/media/dILrAu24mU729pxPYN/giphy.gif", in_reply_to_status_id: x.id, media_url: "https://media.giphy.com/media/dILrAu24mU729pxPYN/giphy.gif", media_category: 'TWEET_GIF' )
+puts "Tweet rely sent"
 
-
+    end
 end
