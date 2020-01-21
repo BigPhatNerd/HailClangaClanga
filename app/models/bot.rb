@@ -1,9 +1,11 @@
 
+
 class Bot < ApplicationRecord
 
 
   def self.hail_state_hashtag
     count = 0
+
     CLIENT.search("#hailstate -rt", result_type: "mixed").take(20).each do |tweet|
       unless exists?(tweet_id: tweet.id)
         create!(
@@ -16,11 +18,11 @@ class Bot < ApplicationRecord
           retweets: tweet.retweet_count,
         )
       end
-      puts tweet.text
-      puts "________________________"
-      puts "Tweet id: #{tweet.id}"
-      puts "________________________"
-      puts "Count is: #{count}"
+      puts "#{tweet.text}\n
+      ________________________\n
+      Tweet id: #{tweet.id}\n
+      ________________________"
+     Count is: #{count}"
       text = tweet.text.downcase
       user_name = tweet.user.name.downcase
       screen_name = tweet.user.screen_name.downcase
@@ -30,13 +32,22 @@ class Bot < ApplicationRecord
           (user_name.include? "hailstate") || (user_name.include? "mississippi state") ||
           (user_description.include?"mississippi state") || (user_description.include? "hailstate") || (user_description.include? "mississippi state") &&
           (tweet.user.followers_count > 100) && (tweet.user.following? == false)
-        puts "________________________"
-        puts "Follow person with #HailState tweet"
-        puts "________________________"
+          count += 1
+        puts "________________________\n
+        Follow person with #HailState tweet\n
+       ________________________\n
 
-        puts "Count is #{count}"
-        CLIENT.follow("#{tweet.user.screen_name}")
+        Count is #{count}"
+        begin
+            CLIENT.follow("#{tweet.user.screen_name}")
+          rescue
+            puts "********************\n
+            NEEDED TO BE RESCUED\n
+            *********************"
+            Twitter::Error::Forbidden
+          end
       else
+      	count += 1
 
         puts "DID NOT FOLLOW #HailState tweet"
 
@@ -60,12 +71,12 @@ class Bot < ApplicationRecord
           retweets: tweet.retweet_count,
         )
       end
-      puts tweet.text
-      puts "________________________"
-      puts "This is the tweet id: #{tweet.id}"
-      puts "________________________"
-      puts "Count is: #{count}"
-      puts "________________________"
+      puts "#{tweet.text}\n
+      ________________________\n
+      This is the tweet id: #{tweet.id}\n
+      ________________________\n
+      Count is: #{count}\n
+      ________________________"
       text = tweet.text.downcase
       if(((text.include? "mike leach") && (text.include? "hailstate")) ||
          ((text.include? "@coach_leach") && (text.include? "#hailstate")) ||
@@ -77,10 +88,20 @@ class Bot < ApplicationRecord
          ((text.include? "@coach_leach") && (text.include? "air raid")) ||
          ((text.include? "swingyoursword") && (text.include? "hailstate")) ||
          ((text.include? "pirate") && (text.include? "hailstate")))
-        puts "Follow person with Mike Leach tweet"
-        puts "________________________"
-        CLIENT.follow("#{tweet.user.screen_name}")
+      count += 1
+        puts "Follow person with Mike Leach tweet\n
+        ________________________"
+        
+        begin
+            CLIENT.follow("#{tweet.user.screen_name}")
+          rescue
+            puts "********************\n
+            NEEDED TO BE RESCUED\n
+            *********************"
+            Twitter::Error::Forbidden
+          end
       else
+      	count += 1
         puts "DID NOT FOLLOW Mike Leach tweet"
       end
 
@@ -141,12 +162,13 @@ class Bot < ApplicationRecord
           retweets: tweet.retweet_count,
         )
       end
-      count += 1
+      
       tweet_text = tweet.text.downcase
       if (tweet.in_reply_to_status_id? == false)
         if ((tweet_text.include? "mike leach") && (tweet_text.include? "hailstate")) ||
             ((tweet_text.include? "mike leach") && (tweet_text.include? "starkvegas")) ||
             ((tweet_text.include? "swingyoursword") && (tweet_text.include? "hailstate"))
+            count += 1
           puts "RETWEETED\n
           ________________________"
           begin
@@ -160,6 +182,7 @@ class Bot < ApplicationRecord
         elsif ((tweet_text.include? "hailstate") &&
           (tweet_text.include? "football")) || (tweet_text.include? " mississippi state football") ||
             (tweet_text.include? "hail state football") || (tweet_text.include? "hailstate football")
+            count += 1
           puts "RETWEETED\n
          ________________________"
           begin
@@ -172,6 +195,7 @@ class Bot < ApplicationRecord
           end
         elsif (tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach")
           (tweet_text.include? "Coach Leach")
+          count += 1
           puts "RETWEETED\n
           ________________________"
           begin
@@ -183,6 +207,7 @@ class Bot < ApplicationRecord
             Twitter::Error::Forbidden
           end
         elsif (tweet_text.include? "#gthom")
+        	count += 1
           puts "RETWEETED\n
           ________________________"
           begin
@@ -203,6 +228,7 @@ class Bot < ApplicationRecord
             ((tweet_text.include? "osirus") && (tweet_text.include? "mississippi state")) ||
             ((tweet_text.include? "stephen guidry") && (tweet_text.include? "hailstate")) ||
             ((tweet_text.include? "stephen guidry") && (tweet_text.include? "mississippi state"))
+            count += 1
           puts "RETWEETED\n
           ________________________"
           begin
@@ -214,6 +240,7 @@ class Bot < ApplicationRecord
             Twitter::Error::Forbidden
           end
         else
+        	count += 1
           puts "*******NOT RETWEETED******\n
           ________________________"
         end
@@ -227,9 +254,10 @@ def self.test
       ________________________\n
       This is the tweet id: #{x.id}\n
       ________________________"
-
-CLIENT.update("@#{x.user.screen_name} Why won't my damn giphy play in a loop? @JoePFerguson @ThirstyRunner https://media.giphy.com/media/dILrAu24mU729pxPYN/giphy.gif", in_reply_to_status_id: x.id, media_url: "https://media.giphy.com/media/dILrAu24mU729pxPYN/giphy.gif", media_category: 'TWEET_GIF' )
-puts "Tweet rely sent"
+image = Twitter::Image.open_from_url("app/assets/images/screen_shot.png")
+CLIENT.update_with_media("@#{x.user.screen_name} ", image, in_reply_to_status_id: x.id)
+puts "Tweet reply sent"
 
     end
 end
+
