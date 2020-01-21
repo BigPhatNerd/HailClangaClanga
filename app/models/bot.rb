@@ -151,7 +151,7 @@ class Bot < ApplicationRecord
           begin
             CLIENT.retweet(tweet)
           rescue
-          	puts "********************"
+            puts "********************"
             puts "NEEDED TO BE RESCUED"
             puts "*********************"
             Twitter::Error::Forbidden
@@ -165,7 +165,7 @@ class Bot < ApplicationRecord
           begin
             CLIENT.retweet(tweet)
           rescue
-          	puts "********************"
+            puts "********************"
             puts "NEEDED TO BE RESCUED"
             puts "*********************"
             Twitter::Error::Forbidden
@@ -178,7 +178,7 @@ class Bot < ApplicationRecord
           begin
             CLIENT.retweet(tweet)
           rescue
-          	puts "********************"
+            puts "********************"
             puts "NEEDED TO BE RESCUED"
             puts "*********************"
             Twitter::Error::Forbidden
@@ -190,7 +190,7 @@ class Bot < ApplicationRecord
           begin
             CLIENT.retweet(tweet)
           rescue
-          	puts "********************"
+            puts "********************"
             puts "NEEDED TO BE RESCUED"
             puts "*********************"
             Twitter::Error::Forbidden
@@ -219,84 +219,7 @@ class Bot < ApplicationRecord
 
         else
           puts "*******NOT RETWEETED******"
-        puts "________________________"				end
-      end
-
-
-    end
-
-
-  end
-
-  def self.test
-    count = 0
-    CLIENT.search("#hailstate", since_id: maximum(:tweet_id)).take(5).each do |tweet|
-
-      puts "Name: #{tweet.user.name}"
-      puts "--------"
-      puts "Screen Name: #{tweet.user.screen_name}"
-      puts "---------"
-      puts "Tweet text: #{tweet.text}"
-      puts "--------"
-      puts "Retweet Count: #{tweet.retweet_count}"
-      puts "--------"
-      puts "Favorites Count: #{tweet.favorite_count}"
-      puts "-------"
-      puts count += 1
-      unless exists?(tweet_id: tweet.id)
-        create!(
-          tweet_id: tweet.id,
-          content: tweet.text,
-          screen_name: tweet.user.screen_name,
-          followers_count: tweet.user.followers_count,
-          description: tweet.user.description,
-          user_id: tweet.user.id,
-          retweets: tweet.retweet_count,
-        )
-      end
-      puts "HAS THIS TWEET BEEN RETWEETED?  #{tweet.retweeted?}"
-      tweet_text = tweet.text.downcase
-      byebug
-      if (tweet.in_reply_to_status_id? == false && tweet.retweeted? == false)
-        if((tweet_text.include? "mike leach") && (tweet_text.include? "hailstate")) ||
-            ((tweet_text.include? "mike leach") && (tweet_text.include? "starkvegas")) ||
-            ((tweet_text.include? "swingyoursword") && (tweet_text.include? "hailstate"))
-          puts "RETWEETED"
-          puts "------------"
-          #CLIENT.retweet(tweet)
-        elsif
-          ((tweet_text.include? "hailstate") &&
-          (tweet_text.include? "football")) || (tweet_text.include? " mississippi state football") ||
-            (tweet_text.include? "hail state football") || (tweet_text.include? "hailstate football")
-          puts "RETWEETED"
-          puts "------------"
-          #CLIENT.retweet(tweet)
-        elsif
-          (tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach")
-          (tweet_text.include? "Coach Leach")
-          puts "RETWEETED"
-          puts "------------"
-          #CLIENT.retweet(tweet)
-        elsif
-          (tweet_text.include? "#gthom")
-          puts "RETWEETED"
-          puts "------------"
-          #CLIENT.retweet(tweet)
-        elsif
-          ((tweet_text.include? "kylin") && (tweet_text.include? "hailstate")) ||
-            ((tweet_text.include? "kylin") && (tweet_text.include? "mississippi state")) ||
-            ((tweet_text.include? "chauncey") && (tweet_text.include? "hailstate")) ||
-            ((tweet_text.include? "chauncey") && (tweet_text.include? "mississippi state")) ||
-            ((tweet_text.include? "darryl williams") && (tweet_text.include? "hailstate")) ||
-            ((tweet_text.include? "darryl williams") && (tweet_text.include? "mississippi state")) ||
-            ((tweet_text.include? "osirus") && (tweet_text.include? "hailstate")) ||
-            ((tweet_text.include? "osirus") && (tweet_text.include? "mississippi state")) ||
-            ((tweet_text.include? "stephen guidry") && (tweet_text.include? "hailstate")) ||
-            ((tweet_text.include? "stephen guidry") && (tweet_text.include? "mississippi state"))
-
-        else
-          puts "NOT RETWEETED FOR WHATEVER REASON"
-          puts "-----------------"
+          puts "________________________"
         end
       end
 
@@ -305,8 +228,6 @@ class Bot < ApplicationRecord
 
 
   end
-
-  def testing
 
 
 
