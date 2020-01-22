@@ -134,9 +134,9 @@ class Bot < ApplicationRecord
   end
 
   def self.retweet
-    
+    count = 0
     CLIENT.search("#hailstate", since_id: maximum(:tweet_id)).take(20).each do |tweet|
-    	count = 0
+    	
       puts "Name: #{tweet.user.name}\n
       ________________________\n			
       Screen Name: #{tweet.user.screen_name}\n
@@ -275,7 +275,8 @@ class Bot < ApplicationRecord
 "app/assets/images/wreck.gif"]
 
 
-  CLIENT.search("#lanetrain #hottytoddy", result_type: "mixed").take(2).each do |tweet| 
+  CLIENT.search("#LaneTrain #HottyToddy").take(1).each do |tweet|
+puts "I am tweet id: #{tweet.id}" 
 if exists?(tweet_id: tweet.id)
   puts "This already exists so I am leaving"
 end
@@ -305,7 +306,7 @@ unless exists?(tweet_id: tweet.id)
           retweets: tweet.retweet_count,
         )
         end
-      end    
+      end
   end
 
 end
