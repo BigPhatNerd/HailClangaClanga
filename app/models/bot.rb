@@ -275,7 +275,7 @@ class Bot < ApplicationRecord
 "app/assets/images/wreck.gif"]
 
 
-  CLIENT.search("#LaneTrain #HottyToddy").take(1).each do |tweet|
+  CLIENT.search("#LaneTrain #HottyToddy -rt", since_id: maximum(:tweet_id)).take(1).each do |tweet|
 puts "I am tweet id: #{tweet.id}" 
 if exists?(tweet_id: tweet.id)
   puts "This already exists so I am leaving"
