@@ -21,7 +21,7 @@ class Bot < ApplicationRecord
       puts "#{tweet.text}\n
       ________________________\n
       Tweet id: #{tweet.id}\n
-      ________________________"
+      ________________________
      Count is: #{count}"
       text = tweet.text.downcase
       user_name = tweet.user.name.downcase
@@ -248,16 +248,65 @@ class Bot < ApplicationRecord
     end
   end
 
-def self.test
-	x = CLIENT.status(1219663842881540096)
-      puts "#{x.text}\n
-      ________________________\n
-      This is the tweet id: #{x.id}\n
-      ________________________"
-image = Twitter::Image.open_from_url("app/assets/images/screen_shot.png")
-CLIENT.update_with_media("@#{x.user.screen_name} ", image, in_reply_to_status_id: x.id)
-puts "Tweet reply sent"
 
-    end
+  def self.kiffin
+ gif_array =   ["app/assets/images/anotherdisaster.gif",
+"app/assets/images/barf.gif",
+"app/assets/images/disaster.gif",
+"app/assets/images/disaster2.gif",
+"app/assets/images/disaster3.gif",
+"app/assets/images/future.gif",
+"app/assets/images/giphy.gif",
+"app/assets/images/giphy2.gif",
+"app/assets/images/giphy3.gif",
+"app/assets/images/hotmess.gif",
+"app/assets/images/hotmess2.gif",
+"app/assets/images/miley.gif",
+"app/assets/images/ohdear.gif",
+"app/assets/images/push.gif",
+"app/assets/images/train.gif",
+"app/assets/images/train2.gif",
+"app/assets/images/train3.gif",
+"app/assets/images/train4.gif",
+"app/assets/images/train5.gif",
+"app/assets/images/train6.gif",
+"app/assets/images/train7.gif",
+"app/assets/images/usc.gif",
+"app/assets/images/wreck.gif"]
+
+
+  CLIENT.search("#lanetrain #hottytoddy", since_id: maximum(:tweet_id)).take(2).each do |tweet| 
+if exists?(tweet_id: tweet.id)
+  puts "This already exists so I am leaving"
+end
+unless exists?(tweet_id: tweet.id)
+      puts tweet.attrs
+      puts "DOES NOT EXISTS"
+      
+      
+      bullet = gif_array.shuffle!.first
+      puts "Bullet: #{bullet}"
+      shot_fired = File.new(bullet)
+      begin
+        puts "Updating with #{bullet}"
+      CLIENT.update_with_media("@#{tweet.user.screen_name} Did you say \"Lane Train\"?\n😂🤷‍♂️🥚🥣🏆🐶🏴‍☠️🙌\n😔🦈🐻🚂🤭", shot_fired,in_reply_to_status_id: tweet.id)
+    rescue
+      puts "----FORBIDDEN---"
+      Twitter::Error::Forbidden
+    end    
+      puts "#{tweet.id} GOING TO PUT IN DATABASE NOW"
+        create!(
+          tweet_id: tweet.id,
+          content: tweet.text,
+          screen_name: tweet.user.screen_name,
+          followers_count: tweet.user.followers_count,
+          description: tweet.user.description,
+          user_id: tweet.user.id,
+          retweets: tweet.retweet_count,
+        )
+        end
+      end    
+  end
+
 end
 

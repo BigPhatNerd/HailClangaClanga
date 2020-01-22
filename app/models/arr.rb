@@ -1,0 +1,3 @@
+class Arr < ApplicationRecord
+
+end
