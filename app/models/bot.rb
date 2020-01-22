@@ -117,7 +117,7 @@ class Bot < ApplicationRecord
     weeks_until_eggbowl = days_to_egg_bowl/7
     day_of_week = DateTime.now.cwday
 DAY = {
-0 => "It's gonna be 🥜"
+0 => "It's gonna be 🥜",
 1 =>  "I bet we throw once or twice",
 2 =>  "@H_Kylin is going to decleat folks",
 3 => "I'm having a hard time waiting",
