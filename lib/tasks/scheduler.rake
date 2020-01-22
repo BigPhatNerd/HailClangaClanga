@@ -26,3 +26,10 @@ task tweets_to_retweet: :environment do
   puts "Re-tweeted those that I follow!"
 end
 
+desc "Lane Train trolling"
+task lane_train: :environment do
+  puts "Searching for #LaneTrain and #HottyToddy....."
+  Bot.kiffin
+  puts "Lane Train Performed"
+end
+
