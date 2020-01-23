@@ -1,5 +1,29 @@
 <div id="hailstate_hashtags">
     <% cache "hailstate#{Date.today}" do %>
+    <% yesterday_friends = 277 %>
+    <% yesterday_follows = 80 %>
+    <% User.order("created_at desc").each do |user| %>
+    <blockquote>
+        <% x = Time.at(user.created_at).to_i %>
+        <%= "Date: #{Time.at(x).strftime("%B %e, %Y at %I:%M %c")}" %>
+        <br>
+        <%= "Friends count: #{user.friends_count}" %>
+        <br>
+        <%= "Friends gained from yesterday: #{user.friends_count - yesterday_friends} " %>
+        <br>
+        <%= "Friends gained from last week:  " %>
+        <br>
+        <%= "Followers count: #{user.followers_count}"%>
+        <br>
+        <%= "Folowers gained from yesterday: #{user.followers_count - yesterday_follows}  " %>
+        <br>
+        <%= "Followers gained from last week:  " %>
+        <br>
+        <%= "Followers to follow ratio: #{((user.followers_count.to_f / user.friends_count.to_f) * 100).round}%" %>
+        <% yesterday_friends = user.friends_count %>
+        <% yesterday_follows = user.followers_count %>
+    </blockquote>
+    <% end %>
     <% Bot.order("tweet_id desc").limit(10).each do |bot| %>
     <blockquote>
         <%=bot.content %>

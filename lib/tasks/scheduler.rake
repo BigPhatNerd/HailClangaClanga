@@ -33,3 +33,10 @@ task lane_train: :environment do
   puts "Lane Train Performed"
 end
 
+desc "Friends and Followers"
+task friends_and_followers: :environment do
+  puts "Updating Friends & Followers page....."
+  User.friends_and_followers
+  puts "Friends and Followers Stats Updated"
+end
+
