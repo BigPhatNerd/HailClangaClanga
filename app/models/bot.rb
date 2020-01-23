@@ -282,8 +282,9 @@ day = {
 "app/assets/images/usc.gif",
 "app/assets/images/wreck.gif"]
 
-
-  CLIENT.search("#LaneTrain #HottyToddy -rt", since_id: maximum(:tweet_id)).take(1).each do |tweet|
+count = 0
+  CLIENT.search("#LaneTrain #HottyToddy -rt", since_id: maximum(:tweet_id)).take(3).each do |tweet|
+    break if count > 0
 puts "I am tweet id: #{tweet.id}" 
 if exists?(tweet_id: tweet.id)
   puts "This already exists so I am leaving"
@@ -298,6 +299,7 @@ unless exists?(tweet_id: tweet.id)
       shot_fired = File.new(bullet)
       begin
         puts "Updating with #{bullet}"
+        count += 1
       CLIENT.update_with_media("@#{tweet.user.screen_name} Did you say \"Lane Train\"?\n😂🤷‍♂️🥚🥣🏆🐶🏴‍☠️🙌\n😔🦈🐻🚂🤭", shot_fired,in_reply_to_status_id: tweet.id)
     rescue
       puts "----FORBIDDEN---"
@@ -315,6 +317,8 @@ unless exists?(tweet_id: tweet.id)
         )
         end
       end
+      puts "COUNT IS: #{count}"
+
   end
 
 
