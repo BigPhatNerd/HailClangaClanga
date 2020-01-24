@@ -36,5 +36,42 @@ create!({
 	friends_count: y
 })
   end
+
+  def self.create_message
+ yesterday_friends = 277 
+     yesterday_follows = 80 
+     User.order("created_at desc").each do |user| 
+    
+        x = Time.at(user.created_at).to_i 
+message ="Date: #{Time.at(x).strftime("%B %e, %Y at %I:%M %c")}\n        
+Friends count: #{user.friends_count}\n 
+ 🎉🙏🎊🙌🍾       
+Friends gained from yesterday: #{user.friends_count - yesterday_friends}\n   
+ ☝️🆙⬆️⬆📈☝       
+Followers count: #{user.followers_count}\n
+😎🍻😛🥳   
+Folowers gained from yesterday: #{user.followers_count - yesterday_follows}\n    
+🤜🤛💃🕺🐸     
+Followers to follow ratio: #{((user.followers_count.to_f / user.friends_count.to_f) * 100).round}%\n
+🗽🎁📣🔮⚙️"
+         yesterday_friends = user.friends_count 
+         yesterday_follows = user.followers_count 
+    return message
+     end 
+
+
+  end
+  def self.send_message
+    account_sid = 'ACbaad316dbd9a4d3c5570500ac8190c2f'
+    auth_token = '70c6e242e923287f86ac931e800201ed'
+   twilio = Twilio::REST::Client.new(account_sid, auth_token)
+    from = '+16172945705' # Your Twilio number
+to = '+19019213757'
+twilio.messages.create(
+from: from,
+to: to,
+body: "HailClangaClang's Twitter Report:\n\n#{self.create_message}"
+)
+  end
 end
 

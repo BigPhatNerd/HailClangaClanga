@@ -40,3 +40,10 @@ task friends_and_followers: :environment do
   puts "Friends and Followers Stats Updated"
 end
 
+desc "Generating friends and followers text"
+task send_message: :environment do
+  puts "Sending text message....."
+  User.send_message
+  puts "Text message sent!"
+end
+

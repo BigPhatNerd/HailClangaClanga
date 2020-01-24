@@ -6,7 +6,8 @@ ruby '2.5.3'
 gem 'twitter', '~> 5.16'
 gem 'figaro'
 gem 'randumb'
-
+gem 'sinatra'
+gem 'twilio-ruby', '~> 5.5'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
