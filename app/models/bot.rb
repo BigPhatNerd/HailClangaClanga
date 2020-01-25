@@ -189,10 +189,15 @@ day = {
           end
         elsif ((tweet_text.include? "hailstate") &&
           (tweet_text.include? "football")) || ((tweet_text.include? "hailstate") &&
-          (tweet_text.include? "lineman")) || ((tweet_text.include? "hailstate") &&
-          (tweet_text.include? "quarterback")) || ((tweet_text.include? "hailstate") &&
-          (tweet_text.include? "receiver"))  || (tweet_text.include? " mississippi state football") ||
-            (tweet_text.include? "hail state football") || (tweet_text.include? "hailstate football") 
+          (tweet_text.include? "lineman")) || ((tweet_text.include? "mississippi state") &&
+          (tweet_text.include? "lineman"))|| ((tweet_text.include? "hailstate") &&
+          (tweet_text.include? "quarterback")) || ((tweet_text.include? "mississippi state") &&
+          (tweet_text.include? "quarterback"))|| ((tweet_text.include? "hailstate") &&
+          (tweet_text.include? "receiver"))  || ((tweet_text.include? "mississippi state") &&
+          (tweet_text.include? "receiver")) || ((tweet_text.include? "hailstate") &&
+          (tweet_text.include? "qb")) || ((tweet_text.include? "football") &&
+          (tweet_text.include? "qb")) || ((tweet_text.include? " mississippi state football") &&
+            (tweet_text.include? "hail state football"))
             count += 1
           puts "RETWEETED\n
          ________________________"
@@ -204,8 +209,7 @@ day = {
             *********************"
             Twitter::Error::Forbidden
           end
-        elsif (tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach")
-         || (tweet_text.include? "Coach Leach")
+        elsif (tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach") || (tweet_text.include? "Coach Leach")
           count += 1
           puts "RETWEETED\n
           ________________________"
