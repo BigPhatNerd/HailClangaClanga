@@ -62,8 +62,8 @@ Followers to follow ratio: #{((user.followers_count.to_f / user.friends_count.to
 
   end
   def self.send_message
-    account_sid = 'ACbaad316dbd9a4d3c5570500ac8190c2f'
-    auth_token = '70c6e242e923287f86ac931e800201ed'
+    account_sid = ENV['account_sid']
+    auth_token = ENV['auth_token']
    twilio = Twilio::REST::Client.new(account_sid, auth_token)
     from = '+16172945705' # Your Twilio number
 to = '+19019213757'

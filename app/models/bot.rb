@@ -143,7 +143,7 @@ day = {
 
   def self.retweet
     count = 0
-    CLIENT.search("#hailstate", since_id: maximum(:tweet_id)).take(15).each do |tweet|
+    CLIENT.search("#hailstate football", since_id: maximum(:tweet_id)).take(15).each do |tweet|
     	
       puts "Name: #{tweet.user.name}\n
       ________________________\n			
@@ -188,8 +188,11 @@ day = {
             Twitter::Error::Forbidden
           end
         elsif ((tweet_text.include? "hailstate") &&
-          (tweet_text.include? "football")) || (tweet_text.include? " mississippi state football") ||
-            (tweet_text.include? "hail state football") || (tweet_text.include? "hailstate football")
+          (tweet_text.include? "football")) || ((tweet_text.include? "hailstate") &&
+          (tweet_text.include? "lineman")) || ((tweet_text.include? "hailstate") &&
+          (tweet_text.include? "quarterback")) || ((tweet_text.include? "hailstate") &&
+          (tweet_text.include? "receiver"))  || (tweet_text.include? " mississippi state football") ||
+            (tweet_text.include? "hail state football") || (tweet_text.include? "hailstate football") 
             count += 1
           puts "RETWEETED\n
          ________________________"
@@ -202,7 +205,7 @@ day = {
             Twitter::Error::Forbidden
           end
         elsif (tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach")
-          (tweet_text.include? "Coach Leach")
+         || (tweet_text.include? "Coach Leach")
           count += 1
           puts "RETWEETED\n
           ________________________"
@@ -214,7 +217,7 @@ day = {
             *********************"
             Twitter::Error::Forbidden
           end
-        elsif (tweet_text.include? "#gthom")
+        elsif ((tweet_text.include? "#gthom") && (tweet_text.include? "#football"))
         	count += 1
           puts "RETWEETED\n
           ________________________"
