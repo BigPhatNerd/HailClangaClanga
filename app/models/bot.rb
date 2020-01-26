@@ -6,7 +6,7 @@ class Bot < ApplicationRecord
   def self.hail_state_hashtag
     count = 0
 
-    CLIENT.search("#hailstate -rt", result_type: "mixed").take(15).each do |tweet|
+    CLIENT.search("#hailstate").take(15).each do |tweet|
       unless exists?(tweet_id: tweet.id)
         create!(
           tweet_id: tweet.id,
@@ -59,7 +59,7 @@ class Bot < ApplicationRecord
 
   def self.mike_leach_hashtag
     count = 0
-    CLIENT.search("Mike Leach #hailstate -rt", result_type: "mixed").take(12).each do |tweet|
+    CLIENT.search("Mike Leach #hailstate").take(12).each do |tweet|
       unless exists?(tweet_id: tweet.id)
         create!(
           tweet_id: tweet.id,
