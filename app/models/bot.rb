@@ -59,7 +59,7 @@ class Bot < ApplicationRecord
 
   def self.mike_leach_hashtag
     count = 0
-    CLIENT.search("Mike Leach #hailstate -rt", result_type: "mixed").take(15).each do |tweet|
+    CLIENT.search("Mike Leach #hailstate -rt", result_type: "mixed").take(12).each do |tweet|
       unless exists?(tweet_id: tweet.id)
         create!(
           tweet_id: tweet.id,
@@ -143,7 +143,7 @@ day = {
 
   def self.retweet
     count = 0
-    CLIENT.search("#hailstate football", since_id: maximum(:tweet_id)).take(15).each do |tweet|
+    CLIENT.search("#hailstate football -rt").take(15).each do |tweet|
     	
       puts "Name: #{tweet.user.name}\n
       ________________________\n			
@@ -177,16 +177,14 @@ day = {
             ((tweet_text.include? "mike leach") && (tweet_text.include? "starkvegas")) ||
             ((tweet_text.include? "swingyoursword") && (tweet_text.include? "hailstate"))
             count += 1
-          puts "RETWEETED\n
+          puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
           begin
-            CLIENT.retweet(tweet)
-          rescue
-            puts "********************\n
-            NEEDED TO BE RESCUED\n
-            *********************"
-            Twitter::Error::Forbidden
-          end
+            CLIENT.retweet!(tweet)
+            rescue Twitter::Error::Forbidden
+              puts "-----RESCUED-----"
+            end
+          
         elsif ((tweet_text.include? "hailstate") &&
           (tweet_text.include? "football")) || ((tweet_text.include? "hailstate") &&
           (tweet_text.include? "lineman")) || ((tweet_text.include? "mississippi state") &&
@@ -199,40 +197,34 @@ day = {
           (tweet_text.include? "qb")) || ((tweet_text.include? " mississippi state football") &&
             (tweet_text.include? "hail state football"))
             count += 1
-          puts "RETWEETED\n
+          puts "MATCHES RETWEET PARAMETERS\n
          ________________________"
           begin
-            CLIENT.retweet(tweet)
-          rescue
-            puts "********************\n
-            NEEDED TO BE RESCUED\n
-            *********************"
-            Twitter::Error::Forbidden
-          end
+            CLIENT.retweet!(tweet)
+            rescue Twitter::Error::Forbidden
+              puts "-----RESCUED-----"
+            end
+          
         elsif (tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach") || (tweet_text.include? "Coach Leach")
           count += 1
-          puts "RETWEETED\n
+          puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
           begin
-            CLIENT.retweet(tweet)
-          rescue
-            puts "********************\n
-            NEEDED TO BE RESCUED\n
-            *********************"
-            Twitter::Error::Forbidden
-          end
+            CLIENT.retweet!(tweet)
+            rescue Twitter::Error::Forbidden
+              puts "-----RESCUED-----"
+            end
+          
         elsif ((tweet_text.include? "#gthom") && (tweet_text.include? "#football"))
         	count += 1
-          puts "RETWEETED\n
+          puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
           begin
-            CLIENT.retweet(tweet)
-          rescue
-            puts "********************
-            NEEDED TO BE RESCUED\n
-            *********************"
-            Twitter::Error::Forbidden
-          end
+            CLIENT.retweet!(tweet)
+            rescue Twitter::Error::Forbidden
+              puts "-----RESCUED-----"
+            end
+          
         elsif ((tweet_text.include? "kylin") && (tweet_text.include? "hailstate")) ||
             ((tweet_text.include? "kylin") && (tweet_text.include? "mississippi state")) ||
             ((tweet_text.include? "chauncey") && (tweet_text.include? "hailstate")) ||
@@ -244,16 +236,14 @@ day = {
             ((tweet_text.include? "stephen guidry") && (tweet_text.include? "hailstate")) ||
             ((tweet_text.include? "stephen guidry") && (tweet_text.include? "mississippi state"))
             count += 1
-          puts "RETWEETED\n
+          puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
           begin
-            CLIENT.retweet(tweet)
-          rescue
-            puts "********************\n
-            NEEDED TO BE RESCUED\n
-            *********************"
-            Twitter::Error::Forbidden
-          end
+            CLIENT.retweet!(tweet)
+            rescue Twitter::Error::Forbidden
+              puts "-----RESCUED-----"
+            end
+          
         else
         	count += 1
           puts "*******NOT RETWEETED******\n
