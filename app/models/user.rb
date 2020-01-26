@@ -47,11 +47,11 @@ message ="Date: #{Time.at(x).strftime("%B %e, %Y at %I:%M %c")}\n
 Friends count: #{user.friends_count}\n 
  🎉🙏🎊🙌🍾       
 Friends gained from yesterday: #{user.friends_count - yesterday_friends}\n   
- ☝️🆙⬆️⬆📈☝       
+ ☝️🆙⬆️⬆📈☝ \n      
 Followers count: #{user.followers_count}\n
 😎🍻😛🥳   
 Folowers gained from yesterday: #{user.followers_count - yesterday_follows}\n    
-🤜🤛💃🕺🐸     
+🤜🤛💃🕺🐸\n     
 Followers to follow ratio: #{((user.followers_count.to_f / user.friends_count.to_f) * 100).round}%\n
 🗽🎁📣🔮⚙️"
          yesterday_friends = user.friends_count 
