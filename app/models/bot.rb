@@ -143,7 +143,7 @@ day = {
 
   def self.retweet
     count = 0
-    CLIENT.search("#hailstate -rt").take(15).each do |tweet|
+    CLIENT.search("#hailstate -rt", since_id: maximum(:tweet_id)).take(12).each do |tweet|
     	
       puts "Name: #{tweet.user.name}\n
       ________________________\n			
@@ -205,7 +205,7 @@ day = {
               puts "-----RESCUED-----"
             end
           
-        elsif (tweet.user.screen_name == "@Coach_Leach") || (tweet_text.include? "@Coach_Leach") || (tweet_text.include? "Coach Leach")
+        elsif (tweet.user.screen_name == "@Coach_Leach") || (tweet.user.screen_name == "@HailStateFB") || (tweet_text.include? "@hailstatefb") || (tweet_text.include? "@coach_leach") || (tweet_text.include? "coach leach")
           count += 1
           puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
@@ -280,7 +280,7 @@ day = {
 "app/assets/images/wreck.gif"]
 
 count = 0
-  CLIENT.search("#LaneTrain #HottyToddy -rt", since_id: maximum(:tweet_id)).take(3).each do |tweet|
+  CLIENT.search("#LaneTrain #HottyToddy -rt").take(5).each do |tweet|
     break if count > 0
 puts "I am tweet id: #{tweet.id}" 
 if exists?(tweet_id: tweet.id)
@@ -296,8 +296,9 @@ unless exists?(tweet_id: tweet.id)
       shot_fired = File.new(bullet)
       begin
         puts "Updating with #{bullet}"
-        count += 1
+        
       CLIENT.update_with_media("@#{tweet.user.screen_name} Did you say \"Lane Train\"?\n😂🤷‍♂️🥚🥣🏆🐶🏴‍☠️🙌\n😔🦈🐻🚂🤭", shot_fired,in_reply_to_status_id: tweet.id)
+      count += 1
     rescue
       puts "----FORBIDDEN---"
       Twitter::Error::Forbidden
