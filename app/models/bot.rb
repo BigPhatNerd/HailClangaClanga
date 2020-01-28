@@ -143,7 +143,7 @@ day = {
 
   def self.retweet
     count = 0
-    CLIENT.search("#hailstate football -rt").take(15).each do |tweet|
+    CLIENT.search("#hailstate").take(15).each do |tweet|
     	
       puts "Name: #{tweet.user.name}\n
       ________________________\n			
