@@ -1,33 +1,6 @@
 class User < ApplicationRecord
 
 
-  def self.update
-
-begin
-            user_followers = CLIENT.followers.count
-            sleep(6)
-          rescue
-            puts "********************\n
-            FOLLOWERS NEEDED TO BE RESCUED\n
-            *********************"
-            Twitter::Error::Forbidden
-          end
-begin
-            user_friends = CLIENT.friends.count
-          rescue
-            puts "********************\n
-            FRIENDS NEEDED TO BE RESCUED\n
-            *********************"
-            Twitter::Error::Forbidden
-          end
-
-
-create!({ 
-	followers_count: user_followers,
-	friends_count: user_friends
-})
-  end
-
   def self.friends_and_followers  	
   	 x = CLIENT.user("HailClangaClang").followers_count
   	 y = CLIENT.user("HailClangaClang").friends_count
@@ -38,27 +11,27 @@ create!({
   end
 
   def self.create_message
- yesterday_friends = 277 
-     yesterday_follows = 80 
-     User.order("created_at desc").each do |user| 
-    
-        x = Time.at(user.created_at).to_i 
-message ="Date: #{Time.at(x).strftime("%B %e, %Y at %I:%M %c")}\n        
-Friends count: #{user.friends_count}\n 
- 🎉🙏🎊🙌🍾       
-Friends gained from yesterday: #{user.friends_count - yesterday_friends}\n   
- ☝️🆙⬆️⬆📈☝ \n      
-Followers count: #{user.followers_count}\n
-😎🍻😛🥳   
-Folowers gained from yesterday: #{user.followers_count - yesterday_follows}\n    
-🤜🤛💃🕺🐸\n     
-Followers to follow ratio: #{((user.followers_count.to_f / user.friends_count.to_f) * 100).round}%\n
-🗽🎁📣🔮⚙️"
-         yesterday_friends = user.friends_count 
-         yesterday_follows = user.followers_count 
-    return message
+ friendsArr = [0] 
+     followersArr = [0] 
+     User.order("created_at asc").each do |user| 
+    friendsArr.push(user.friends_count)
+    followersArr.push(user.followers_count)   
      end 
-
+x = Time.now
+message ="Date: #{Time.at(x).strftime("%B %c")
+}\n        
+Friends count: #{friendsArr[-1]}\n 
+ 🎉🙏🎊🙌🍾       
+Friends gained from yesterday: #{friendsArr[-1] - friendsArr[-2]}\n   
+ ☝️🆙⬆️⬆📈☝ \n      
+Followers count: #{followersArr[1]}\n
+😎🍻😛🥳   
+Folowers gained from yesterday: #{followersArr[-1] - followersArr[-2]}\n    
+🤜🤛💃🕺🐸\n     
+Followers to follow ratio: #{((followersArr[-1].to_f / friendsArr[-1].to_f) * 100).round}%\n
+🗽🎁📣🔮⚙️"
+         
+    return message
 
   end
   def self.send_message

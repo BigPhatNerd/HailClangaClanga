@@ -143,7 +143,7 @@ day = {
 
   def self.retweet
     count = 0
-    CLIENT.search("#hailstate", since_id: maximum(:retweets_id)).take(9).each do |tweet|
+    CLIENT.search("#hailstate", result_type: "recent", since_id: maximum(:retweets_id)).take(9).each do |tweet|
     	
       puts "Name: #{tweet.user.name}\n
       ________________________\n			
@@ -159,18 +159,7 @@ day = {
       ----------------------------------\n
       Count is: #{count}\n
       ________________________"
-      unless exists?(tweet_id: tweet.id)
-        create!(
-          tweet_id: tweet.id,
-          retweets_id: tweet.id,
-          content: tweet.text,
-          screen_name: tweet.user.screen_name,
-          followers_count: tweet.user.followers_count,
-          description: tweet.user.description,
-          user_id: tweet.user.id,
-          retweets: tweet.retweet_count,
-        )
-      end
+     
       
       tweet_text = tweet.text.downcase
       if (tweet.in_reply_to_status_id? == false)
@@ -184,6 +173,18 @@ day = {
               puts "Error:#{Twitter::Error::Forbidden}"
               puts "-----RESCUED-----"
             end
+             unless exists?(tweet_id: tweet.id)
+        create!(
+          tweet_id: tweet.id,
+          retweets_id: tweet.id,
+          content: tweet.text,
+          screen_name: tweet.user.screen_name,
+          followers_count: tweet.user.followers_count,
+          description: tweet.user.description,
+          user_id: tweet.user.id,
+          retweets: tweet.retweet_count,
+        )
+      end
           
         elsif (tweet_text.include? "football") || (tweet_text.include? "lineman") ||  
           (tweet_text.include? "quarterback") || (tweet_text.include? "receiver")  || 
@@ -198,6 +199,18 @@ day = {
               puts "Error:#{Twitter::Error::Forbidden}"
               puts "-----RESCUED-----"
             end
+             unless exists?(tweet_id: tweet.id)
+        create!(
+          tweet_id: tweet.id,
+          retweets_id: tweet.id,
+          content: tweet.text,
+          screen_name: tweet.user.screen_name,
+          followers_count: tweet.user.followers_count,
+          description: tweet.user.description,
+          user_id: tweet.user.id,
+          retweets: tweet.retweet_count,
+        )
+      end
           
         elsif (tweet.user.screen_name == "@Coach_Leach") || (tweet.user.screen_name == "@HailStateFB") || 
               (tweet_text.include? "@hailstatefb") || (tweet_text.include? "@coach_leach") || 
@@ -211,6 +224,18 @@ day = {
               puts "Error:#{Twitter::Error::Forbidden}"
               puts "-----RESCUED-----"
             end
+             unless exists?(tweet_id: tweet.id)
+        create!(
+          tweet_id: tweet.id,
+          retweets_id: tweet.id,
+          content: tweet.text,
+          screen_name: tweet.user.screen_name,
+          followers_count: tweet.user.followers_count,
+          description: tweet.user.description,
+          user_id: tweet.user.id,
+          retweets: tweet.retweet_count,
+        )
+      end
           
         elsif (tweet_text.include? "#gthom")
         	count += 1
@@ -222,6 +247,18 @@ day = {
               puts "Error:#{Twitter::Error::Forbidden}"
               puts "-----RESCUED-----"
             end
+             unless exists?(tweet_id: tweet.id)
+        create!(
+          tweet_id: tweet.id,
+          retweets_id: tweet.id,
+          content: tweet.text,
+          screen_name: tweet.user.screen_name,
+          followers_count: tweet.user.followers_count,
+          description: tweet.user.description,
+          user_id: tweet.user.id,
+          retweets: tweet.retweet_count,
+        )
+      end
           
         elsif (tweet_text.include? "kylin") || (tweet_text.include? "chauncey") ||
             (tweet_text.include? "darryl williams") || (tweet_text.include? "osirus") ||
@@ -235,6 +272,18 @@ day = {
              puts "Error:#{Twitter::Error::Forbidden}" 
               puts "-----RESCUED-----"
             end
+             unless exists?(tweet_id: tweet.id)
+        create!(
+          tweet_id: tweet.id,
+          retweets_id: tweet.id,
+          content: tweet.text,
+          screen_name: tweet.user.screen_name,
+          followers_count: tweet.user.followers_count,
+          description: tweet.user.description,
+          user_id: tweet.user.id,
+          retweets: tweet.retweet_count,
+        )
+      end
           
         else
         	count += 1
@@ -272,16 +321,12 @@ day = {
 "app/assets/images/wreck.gif"]
 
 count = 0
-  CLIENT.search("#LaneTrain", since_id: maximum(:kiffin_id)).take(5).each do |tweet|
+  CLIENT.search("#LaneTrain", result_type: "recent", since_id: maximum(:kiffin_id)).take(5).each do |tweet|
     break if count > 0
 puts "I am tweet id: #{tweet.id}" 
 if exists?(tweet_id: tweet.id)
   puts "This already exists so I am leaving"
-end
-unless exists?(tweet_id: tweet.id)
-      puts tweet.attrs
-      puts "DOES NOT EXISTS"
-      
+end 
       
       bullet = gif_array.shuffle!.first
       puts "Bullet: #{bullet}"
@@ -296,7 +341,9 @@ unless exists?(tweet_id: tweet.id)
       count = 0
       puts "Error:#{Twitter::Error::Forbidden}" 
       Twitter::Error::Forbidden
-    end    
+    end  
+    unless exists?(tweet_id: tweet.id) 
+    puts "DOES NOT EXISTS" 
       puts "#{tweet.id} GOING TO PUT IN DATABASE NOW"
         create!(
           tweet_id: tweet.id,
