@@ -2,8 +2,11 @@
     <% cache "hailstate#{Date.today}" do %>
     <% yesterday_friends = 277 %>
     <% yesterday_follows = 80 %>
+    <% friendArr = [0] %>
+    <% followerArr = [0] %>
     <% User.order("created_at desc").each do |user| %>
     <blockquote>
+        <%= "Friend Count: #{friendArr}" %>
         <% x = Time.at(user.created_at).to_i %>
         <%= "Date: #{Time.at(x).strftime("%B %e, %Y at %I:%M %c")}" %>
         <br>
