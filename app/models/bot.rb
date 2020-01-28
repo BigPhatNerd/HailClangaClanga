@@ -182,6 +182,7 @@ day = {
           begin
             CLIENT.retweet!(tweet)
             rescue Twitter::Error::Forbidden
+              puts "Error:#{Twitter::Error::Forbidden}"
               puts "-----RESCUED-----"
             end
           
@@ -202,6 +203,7 @@ day = {
           begin
             CLIENT.retweet!(tweet)
             rescue Twitter::Error::Forbidden
+              puts "Error:#{Twitter::Error::Forbidden}"
               puts "-----RESCUED-----"
             end
           
@@ -212,6 +214,7 @@ day = {
           begin
             CLIENT.retweet!(tweet)
             rescue Twitter::Error::Forbidden
+              puts "Error:#{Twitter::Error::Forbidden}"
               puts "-----RESCUED-----"
             end
           
@@ -222,6 +225,7 @@ day = {
           begin
             CLIENT.retweet!(tweet)
             rescue Twitter::Error::Forbidden
+              puts "Error:#{Twitter::Error::Forbidden}"
               puts "-----RESCUED-----"
             end
           
@@ -241,6 +245,7 @@ day = {
           begin
             CLIENT.retweet!(tweet)
             rescue Twitter::Error::Forbidden
+             puts "Error:#{Twitter::Error::Forbidden}" 
               puts "-----RESCUED-----"
             end
           
