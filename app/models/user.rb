@@ -24,7 +24,7 @@ Friends count: #{friendsArr[-1]}\n
  🎉🙏🎊🙌🍾       
 Friends gained from yesterday: #{friendsArr[-1] - friendsArr[-2]}\n   
  ☝️🆙⬆️⬆📈☝ \n      
-Followers count: #{followersArr[1]}\n
+Followers count: #{followersArr[-1]}\n
 😎🍻😛🥳   
 Folowers gained from yesterday: #{followersArr[-1] - followersArr[-2]}\n    
 🤜🤛💃🕺🐸\n     
