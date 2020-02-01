@@ -47,3 +47,10 @@ task send_message: :environment do
   puts "Text message sent!"
 end
 
+desc "Retweeting #hottypotty tweets"
+task hottypotty: :environment do 
+  puts "Retweeting #hottypotty..."
+  Bot.hotty_potty
+  puts "Hotty potty tweets sent"
+end
+

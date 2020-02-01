@@ -32,22 +32,22 @@ class Bot < ApplicationRecord
           (user_name.include? "hailstate") || (user_name.include? "mississippi state") ||
           (user_description.include?"mississippi state") || (user_description.include? "hailstate") || (user_description.include? "mississippi state") &&
           (tweet.user.followers_count > 100) && (tweet.user.following? == false)
-          count += 1
+        count += 1
         puts "________________________\n
         Follow person with #HailState tweet\n
        ________________________\n
 
         Count is #{count}"
         begin
-            CLIENT.follow("#{tweet.user.screen_name}")
-          rescue
-            puts "********************\n
+          CLIENT.follow("#{tweet.user.screen_name}")
+        rescue
+          puts "********************\n
             NEEDED TO BE RESCUED\n
             *********************"
-            Twitter::Error::Forbidden
-          end
+          Twitter::Error::Forbidden
+        end
       else
-      	count += 1
+        count += 1
 
         puts "DID NOT FOLLOW #HailState tweet"
 
@@ -88,20 +88,20 @@ class Bot < ApplicationRecord
          ((text.include? "@coach_leach") && (text.include? "air raid")) ||
          ((text.include? "swingyoursword") && (text.include? "hailstate")) ||
          ((text.include? "pirate") && (text.include? "hailstate")))
-      count += 1
+        count += 1
         puts "Follow person with Mike Leach tweet\n
         ________________________"
-        
+
         begin
-            CLIENT.follow("#{tweet.user.screen_name}")
-          rescue
-            puts "********************\n
+          CLIENT.follow("#{tweet.user.screen_name}")
+        rescue
+          puts "********************\n
             NEEDED TO BE RESCUED\n
             *********************"
-            Twitter::Error::Forbidden
-          end
+          Twitter::Error::Forbidden
+        end
       else
-      	count += 1
+        count += 1
         puts "DID NOT FOLLOW Mike Leach tweet"
       end
 
@@ -116,15 +116,15 @@ class Bot < ApplicationRecord
     weeks_until_kickoff = number_of_days/7
     weeks_until_eggbowl = days_to_egg_bowl/7
     day_of_week = DateTime.now.cwday
-day = {
-0 => "It's gonna be 🥜",
-1 =>  "I bet we throw once or twice",
-2 =>  "@H_Kylin is going to decleat folks",
-3 => "I'm having a hard time waiting",
-4 =>  "Best👏season👏ever👏.",
-5 => "I just don't know what to say.",
-6 => "Crunk is probably accurate"
-}
+    day = {
+      0 => "It's gonna be 🥜",
+      1 =>  "I bet we throw once or twice",
+      2 =>  "@H_Kylin is going to decleat folks",
+      3 => "I'm having a hard time waiting",
+      4 =>  "Best👏season👏ever👏.",
+      5 => "I just don't know what to say.",
+      6 => "Crunk is probably accurate"
+    }
     if  weeks_until_kickoff > 1
       CLIENT.update("#{weeks_until_kickoff} weeks (#{number_of_days} days) until kickoff!\n#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\n#{day[day_of_week]}\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
     elsif  weeks_until_kickoff == 1
@@ -144,149 +144,149 @@ day = {
   def self.retweet
     count = 0
     CLIENT.search("#hailstate", result_type: "recent", since_id: maximum(:retweets_id)).take(9).each do |tweet|
-    	
+
       puts "Name: #{tweet.user.name}\n
-      ________________________\n			
+      ________________________\n      
       Screen Name: #{tweet.user.screen_name}\n
-      ________________________\n			
+      ________________________\n      
       Tweet text: #{tweet.text}\n
-      ________________________\n			
+      ________________________\n      
       Retweet Count: #{tweet.retweet_count}\n
-      ________________________			
+      ________________________      
       Favorites Count: #{tweet.favorite_count}\n
-      ________________________\n			
+      ________________________\n      
       I have already retweeted this? #{tweet.retweeted?}\n
       ----------------------------------\n
       Count is: #{count}\n
       ________________________"
-     
-      
+
+
       tweet_text = tweet.text.downcase
       if (tweet.in_reply_to_status_id? == false)
-        if (tweet_text.include? "mike leach") || (tweet_text.include? "swingyoursword") 
-            count += 1
-          puts "MATCHES RETWEET PARAMETERS\n
-          ________________________"
-          begin
-            CLIENT.retweet!(tweet)
-            rescue Twitter::Error::Forbidden
-              puts "Error:#{Twitter::Error::Forbidden}"
-              puts "-----RESCUED-----"
-            end
-             unless exists?(tweet_id: tweet.id)
-        create!(
-          tweet_id: tweet.id,
-          retweets_id: tweet.id,
-          content: tweet.text,
-          screen_name: tweet.user.screen_name,
-          followers_count: tweet.user.followers_count,
-          description: tweet.user.description,
-          user_id: tweet.user.id,
-          retweets: tweet.retweet_count,
-        )
-      end
-          
-        elsif (tweet_text.include? "football") || (tweet_text.include? "lineman") ||  
-          (tweet_text.include? "quarterback") || (tweet_text.include? "receiver")  || 
-          (tweet_text.include? "qb") || (tweet_text.include? " mississippi state football") 
-           
-            count += 1
-          puts "MATCHES RETWEET PARAMETERS\n
-         ________________________"
-          begin
-            CLIENT.retweet!(tweet)
-            rescue Twitter::Error::Forbidden
-              puts "Error:#{Twitter::Error::Forbidden}"
-              puts "-----RESCUED-----"
-            end
-             unless exists?(tweet_id: tweet.id)
-        create!(
-          tweet_id: tweet.id,
-          retweets_id: tweet.id,
-          content: tweet.text,
-          screen_name: tweet.user.screen_name,
-          followers_count: tweet.user.followers_count,
-          description: tweet.user.description,
-          user_id: tweet.user.id,
-          retweets: tweet.retweet_count,
-        )
-      end
-          
-        elsif (tweet.user.screen_name == "@Coach_Leach") || (tweet.user.screen_name == "@HailStateFB") || 
-              (tweet_text.include? "@hailstatefb") || (tweet_text.include? "@coach_leach") || 
-              (tweet_text.include? "coach leach")
+        if (tweet_text.include? "mike leach") || (tweet_text.include? "swingyoursword")
           count += 1
           puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
           begin
             CLIENT.retweet!(tweet)
-            rescue Twitter::Error::Forbidden
-              puts "Error:#{Twitter::Error::Forbidden}"
-              puts "-----RESCUED-----"
-            end
-             unless exists?(tweet_id: tweet.id)
-        create!(
-          tweet_id: tweet.id,
-          retweets_id: tweet.id,
-          content: tweet.text,
-          screen_name: tweet.user.screen_name,
-          followers_count: tweet.user.followers_count,
-          description: tweet.user.description,
-          user_id: tweet.user.id,
-          retweets: tweet.retweet_count,
-        )
-      end
-          
-        elsif (tweet_text.include? "#gthom")
-        	count += 1
+          rescue Twitter::Error::Forbidden
+            puts "Error:#{Twitter::Error::Forbidden}"
+            puts "-----RESCUED-----"
+          end
+          unless exists?(tweet_id: tweet.id)
+            create!(
+              tweet_id: tweet.id,
+              retweets_id: tweet.id,
+              content: tweet.text,
+              screen_name: tweet.user.screen_name,
+              followers_count: tweet.user.followers_count,
+              description: tweet.user.description,
+              user_id: tweet.user.id,
+              retweets: tweet.retweet_count,
+            )
+          end
+
+        elsif (tweet_text.include? "football") || (tweet_text.include? "lineman") ||
+            (tweet_text.include? "quarterback") || (tweet_text.include? "receiver")  ||
+            (tweet_text.include? "qb") || (tweet_text.include? " mississippi state football")
+
+          count += 1
+          puts "MATCHES RETWEET PARAMETERS\n
+         ________________________"
+          begin
+            CLIENT.retweet!(tweet)
+          rescue Twitter::Error::Forbidden
+            puts "Error:#{Twitter::Error::Forbidden}"
+            puts "-----RESCUED-----"
+          end
+          unless exists?(tweet_id: tweet.id)
+            create!(
+              tweet_id: tweet.id,
+              retweets_id: tweet.id,
+              content: tweet.text,
+              screen_name: tweet.user.screen_name,
+              followers_count: tweet.user.followers_count,
+              description: tweet.user.description,
+              user_id: tweet.user.id,
+              retweets: tweet.retweet_count,
+            )
+          end
+
+        elsif (tweet.user.screen_name == "@Coach_Leach") || (tweet.user.screen_name == "@HailStateFB") ||
+            (tweet_text.include? "@hailstatefb") || (tweet_text.include? "@coach_leach") ||
+            (tweet_text.include? "coach leach")
+          count += 1
           puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
           begin
             CLIENT.retweet!(tweet)
-            rescue Twitter::Error::Forbidden
-              puts "Error:#{Twitter::Error::Forbidden}"
-              puts "-----RESCUED-----"
-            end
-             unless exists?(tweet_id: tweet.id)
-        create!(
-          tweet_id: tweet.id,
-          retweets_id: tweet.id,
-          content: tweet.text,
-          screen_name: tweet.user.screen_name,
-          followers_count: tweet.user.followers_count,
-          description: tweet.user.description,
-          user_id: tweet.user.id,
-          retweets: tweet.retweet_count,
-        )
-      end
-          
+          rescue Twitter::Error::Forbidden
+            puts "Error:#{Twitter::Error::Forbidden}"
+            puts "-----RESCUED-----"
+          end
+          unless exists?(tweet_id: tweet.id)
+            create!(
+              tweet_id: tweet.id,
+              retweets_id: tweet.id,
+              content: tweet.text,
+              screen_name: tweet.user.screen_name,
+              followers_count: tweet.user.followers_count,
+              description: tweet.user.description,
+              user_id: tweet.user.id,
+              retweets: tweet.retweet_count,
+            )
+          end
+
+        elsif (tweet_text.include? "#gthom")
+          count += 1
+          puts "MATCHES RETWEET PARAMETERS\n
+          ________________________"
+          begin
+            CLIENT.retweet!(tweet)
+          rescue Twitter::Error::Forbidden
+            puts "Error:#{Twitter::Error::Forbidden}"
+            puts "-----RESCUED-----"
+          end
+          unless exists?(tweet_id: tweet.id)
+            create!(
+              tweet_id: tweet.id,
+              retweets_id: tweet.id,
+              content: tweet.text,
+              screen_name: tweet.user.screen_name,
+              followers_count: tweet.user.followers_count,
+              description: tweet.user.description,
+              user_id: tweet.user.id,
+              retweets: tweet.retweet_count,
+            )
+          end
+
         elsif (tweet_text.include? "kylin") || (tweet_text.include? "chauncey") ||
             (tweet_text.include? "darryl williams") || (tweet_text.include? "osirus") ||
-            (tweet_text.include? "stephen guidry") 
-            count += 1
+            (tweet_text.include? "stephen guidry")
+          count += 1
           puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
           begin
             CLIENT.retweet!(tweet)
-            rescue Twitter::Error::Forbidden
-             puts "Error:#{Twitter::Error::Forbidden}" 
-              puts "-----RESCUED-----"
-            end
-             unless exists?(tweet_id: tweet.id)
-        create!(
-          tweet_id: tweet.id,
-          retweets_id: tweet.id,
-          content: tweet.text,
-          screen_name: tweet.user.screen_name,
-          followers_count: tweet.user.followers_count,
-          description: tweet.user.description,
-          user_id: tweet.user.id,
-          retweets: tweet.retweet_count,
-        )
-      end
-          
+          rescue Twitter::Error::Forbidden
+            puts "Error:#{Twitter::Error::Forbidden}"
+            puts "-----RESCUED-----"
+          end
+          unless exists?(tweet_id: tweet.id)
+            create!(
+              tweet_id: tweet.id,
+              retweets_id: tweet.id,
+              content: tweet.text,
+              screen_name: tweet.user.screen_name,
+              followers_count: tweet.user.followers_count,
+              description: tweet.user.description,
+              user_id: tweet.user.id,
+              retweets: tweet.retweet_count,
+            )
+          end
+
         else
-        	count += 1
+          count += 1
           puts "*******NOT RETWEETED******\n
           ________________________"
         end
@@ -296,55 +296,55 @@ day = {
 
 
   def self.kiffin
- gif_array =   ["app/assets/images/anotherdisaster.gif",
-"app/assets/images/barf.gif",
-"app/assets/images/disaster.gif",
-"app/assets/images/disaster2.gif",
-"app/assets/images/disaster3.gif",
-"app/assets/images/future.gif",
-"app/assets/images/giphy.gif",
-"app/assets/images/giphy2.gif",
-"app/assets/images/giphy3.gif",
-"app/assets/images/hotmess.gif",
-"app/assets/images/hotmess2.gif",
-"app/assets/images/miley.gif",
-"app/assets/images/ohdear.gif",
-"app/assets/images/push.gif",
-"app/assets/images/train.gif",
-"app/assets/images/train2.gif",
-"app/assets/images/train3.gif",
-"app/assets/images/train4.gif",
-"app/assets/images/train5.gif",
-"app/assets/images/train6.gif",
-"app/assets/images/train7.gif",
-"app/assets/images/usc.gif",
-"app/assets/images/wreck.gif"]
+    gif_array =   ["app/assets/images/anotherdisaster.gif",
+                   "app/assets/images/barf.gif",
+                   "app/assets/images/disaster.gif",
+                   "app/assets/images/disaster2.gif",
+                   "app/assets/images/disaster3.gif",
+                   "app/assets/images/future.gif",
+                   "app/assets/images/giphy.gif",
+                   "app/assets/images/giphy2.gif",
+                   "app/assets/images/giphy3.gif",
+                   "app/assets/images/hotmess.gif",
+                   "app/assets/images/hotmess2.gif",
+                   "app/assets/images/miley.gif",
+                   "app/assets/images/ohdear.gif",
+                   "app/assets/images/push.gif",
+                   "app/assets/images/train.gif",
+                   "app/assets/images/train2.gif",
+                   "app/assets/images/train3.gif",
+                   "app/assets/images/train4.gif",
+                   "app/assets/images/train5.gif",
+                   "app/assets/images/train6.gif",
+                   "app/assets/images/train7.gif",
+                   "app/assets/images/usc.gif",
+                   "app/assets/images/wreck.gif"]
 
-count = 0
-  CLIENT.search("#LaneTrain", result_type: "recent", since_id: maximum(:kiffin_id)).take(5).each do |tweet|
-    break if count > 0
-puts "I am tweet id: #{tweet.id}" 
-if exists?(tweet_id: tweet.id)
-  puts "This already exists so I am leaving"
-end 
-      
+    count = 0
+    CLIENT.search("#LaneTrain", result_type: "recent", since_id: maximum(:kiffin_id)).take(5).each do |tweet|
+      break if count > 0
+      puts "I am tweet id: #{tweet.id}"
+      if exists?(tweet_id: tweet.id)
+        puts "This already exists so I am leaving"
+      end
+
       bullet = gif_array.shuffle!.first
       puts "Bullet: #{bullet}"
       shot_fired = File.new(bullet)
       begin
         puts "Updating with #{bullet}"
-        
-      CLIENT.update_with_media("@#{tweet.user.screen_name} Did you say \"Lane Train\"?\n😂🤷‍♂️🥚🥣🏆🐶🏴‍☠️🙌\n😔🦈🐻🚂🤭", shot_fired,in_reply_to_status_id: tweet.id)
-      count += 1
-    rescue
-      puts "----FORBIDDEN---"
-      count = 0
-      puts "Error:#{Twitter::Error::Forbidden}" 
-      Twitter::Error::Forbidden
-    end  
-    unless exists?(tweet_id: tweet.id) 
-    puts "DOES NOT EXISTS" 
-      puts "#{tweet.id} GOING TO PUT IN DATABASE NOW"
+
+        CLIENT.update_with_media("@#{tweet.user.screen_name} Did you say \"Lane Train\"?\n😂🤷‍♂️🥚🥣🏆🐶🏴‍☠️🙌\n😔🦈🐻🚂🤭", shot_fired,in_reply_to_status_id: tweet.id)
+        count += 1
+      rescue
+        puts "----FORBIDDEN---"
+        count = 0
+        puts "Error:#{Twitter::Error::Forbidden}"
+        Twitter::Error::Forbidden
+      end
+      unless exists?(tweet_id: tweet.id)
+        puts "DOES NOT EXISTS"
+        puts "#{tweet.id} GOING TO PUT IN DATABASE NOW"
         create!(
           tweet_id: tweet.id,
           kiffin_id: tweet.id,
@@ -355,13 +355,44 @@ end
           user_id: tweet.user.id,
           retweets: tweet.retweet_count,
         )
-        end
       end
-      puts "COUNT IS: #{count}"
+    end
+    puts "COUNT IS: #{count}"
 
   end
 
+  def self.hotty_potty
+    count = 0
+    CLIENT.search("#hottypotty", result_type: "recent", since_id: maximum(:hotty_potty_id)).take(9).each do |tweet|
+      break if count > 2
+      puts "I am tweet id: #{tweet.id}"
+      tweet_text = tweet.text.downcase
+      if (tweet.in_reply_to_status_id? == false)
+        if (tweet_text.include? "#hottypotty")
+      begin
+        CLIENT.retweet!(tweet)
+        count += 1
+      rescue Twitter::Error::Forbidden
+        puts "Error:#{Twitter::Error::Forbidden}"
+        puts "-----RESCUED-----"
+      end
+      unless exists?(tweet_id: tweet.id)
+        create!(
+          tweet_id: tweet.id,
+          hotty_potty_id: tweet.id,
+          kiffin_id: tweet.id,
+          content: tweet.text,
+          screen_name: tweet.user.screen_name,
+          followers_count: tweet.user.followers_count,
+          description: tweet.user.description,
+          user_id: tweet.user.id,
+          retweets: tweet.retweet_count,
+        )
+      end
+    end
+end
+    end
 
+  end
 
 end
-
