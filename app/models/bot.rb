@@ -363,7 +363,7 @@ class Bot < ApplicationRecord
 
   def self.hotty_potty
     count = 0
-    CLIENT.search("#hottypotty", result_type: "recent", since_id: maximum(:hotty_potty_id)).take(9).each do |tweet|
+    CLIENT.search("#hottypotty", result_type: "recent", since_id: maximum(:tweet_id)).take(9).each do |tweet|
       break if count > 2
       puts "I am tweet id: #{tweet.id}"
       tweet_text = tweet.text.downcase
