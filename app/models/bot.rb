@@ -325,7 +325,7 @@ class Bot < ApplicationRecord
       begin
         puts "Updating with #{bullet}"
 
-        CLIENT.update_with_media("@#{tweet.user.screen_name} Did you say \"Lane Train\"?\n😂🤷‍♂️🥚🥣🏆🐶🏴‍☠️🙌\n😔🦈🐻🚂🤭", shot_fired,in_reply_to_status_id: tweet.id)
+        CLIENT.update_with_media("@#{tweet.user.screen_name} Did you say \"Lane Train\"?\n", shot_fired,in_reply_to_status_id: tweet.id)
         count += 1
       rescue
         puts "----FORBIDDEN---"
