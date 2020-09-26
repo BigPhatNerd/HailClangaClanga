@@ -134,7 +134,7 @@ class Bot < ApplicationRecord
 
   def self.retweet
     count = 0
-    CLIENT.search("#hailstate", result_type: "recent", since_id: maximum(:retweets_id)).take(9).each do |tweet|
+    CLIENT.search("#hailstate", result_type: "recent", since_id: maximum(:retweets_id)).take(5).each do |tweet|
 
       puts "Name: #{tweet.user.name}\n
       ________________________\n      
