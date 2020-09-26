@@ -6,7 +6,7 @@ class Bot < ApplicationRecord
   def self.hail_state_hashtag
     count = 0
 
-    CLIENT.search("#hailstate").take(15).each do |tweet|
+    CLIENT.search("#hailstate").take(5).each do |tweet|
       unless exists?(tweet_id: tweet.id)
         create!(
           tweet_id: tweet.id,
