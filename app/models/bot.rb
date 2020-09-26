@@ -154,7 +154,7 @@ class Bot < ApplicationRecord
 
       tweet_text = tweet.text.downcase
       if (tweet.in_reply_to_status_id? == false)
-        if (tweet_text.include? "mike leach") || (tweet_text.include? "swingyoursword")
+        if (tweet_text.include? "mike leach") || (tweet_text.include? "swingyoursword") || (tweet_text.include? "")
           count += 1
           puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
