@@ -110,22 +110,19 @@ class Bot < ApplicationRecord
 
   def self.days_until_kickoff
     kickoff = Date.new(2020, 9, 5)
-    egg_bowl = Date.new(2020, 11, 26)
+    egg_bowl = Date.new(2020, 11, 28)
     number_of_days =((kickoff + 1) - DateTime.now).to_i
     days_to_egg_bowl = ((egg_bowl + 1) - DateTime.now).to_i
     weeks_until_kickoff = number_of_days/7
     weeks_until_eggbowl = days_to_egg_bowl/7
     
-    if  weeks_until_kickoff > 1
-      CLIENT.update("#{weeks_until_kickoff} weeks (#{number_of_days} days) until kickoff!\n#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
-    elsif  weeks_until_kickoff == 1
-      CLIENT.update("#{weeks_until_kickoff} week (#{number_of_days}) until kickoff!\n#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl}) until Egg Bowl! 🥚🏆Time to get it done!.\n\n🐶 🏈 ⚔️🏴‍☠️ 🐮🔔 🎉\n#HailState #SwingYourSword")
-    elsif d weeks_until_kickoff == 0
-      CLIENT.update("Game Day!!\nGet 'em 🐶's\n\n🎉👏🍾🙌🎊🙏\n#HailState")
-    elsif  weeks_until_kickoff < 0 && weeks_until_eggbowl > 1
+    if  weeks_until_eggbowl > 1
       CLIENT.update("#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
+    
     elsif weeks_until_eggbowl == 1
       CLIENT.update("#{weeks_until_eggbowl} week (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\nHoly Moly.\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
+    elsif weeks_until_eggbowl == 0 &&  days_to_egg_bowl > 0
+      CLIENT.update("#{days_to_egg_bowl} days until Egg Bowl! 🥚🏆\nHoly Moly.\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
     elsif weeks_until_eggbowl == 0 && days_to_egg_bowl == 0
       CLIENT.update("Happy Egg Bowl! 🥚🏆\nLeach vs Kiffin\nLet's do what we be doing!\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
     end
