@@ -151,8 +151,8 @@ class Bot < ApplicationRecord
 
       tweet_text = tweet.text.downcase
       if (tweet.in_reply_to_status_id? == false)
-        if (tweet_text.include? "mike leach") || (tweet_text.include? "airraid") || (tweet_text.include? "arkansas") || (tweet_text.include? "razorbacks") || (tweet_text.include? "costello") || (tweet_text.include? "davis wade") ||
-          (tweet_text.include? "sack") || (tweet_text.include? "passing") || (tweet_text.include? "lsu")
+        if (tweet_text.include? "mike leach") || (tweet_text.include? "airraid") || (tweet_text.include? "wildcats") ||  (tweet_text.include? "costello") || (tweet_text.include? "davis wade") ||
+          (tweet_text.include? "sack") || (tweet_text.include? "passing") || (tweet_text.include? "lsu") || (tweet_text.include? "kentucky")
           count += 1
           puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
