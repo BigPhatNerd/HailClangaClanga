@@ -116,7 +116,12 @@ class Bot < ApplicationRecord
     weeks_until_kickoff = number_of_days/7
     weeks_until_eggbowl = days_to_egg_bowl/7
     
-    if  weeks_until_eggbowl > 1
+    if  weeks_until_kickoff > 1
+      CLIENT.update("#{weeks_until_kickoff} weeks (#{number_of_days} days) until kickoff!\n#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
+    elsif  weeks_until_kickoff == 1
+      CLIENT.update("#{weeks_until_kickoff} week (#{number_of_days}) until kickoff!\n#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl}) until Egg Bowl! 🥚🏆Time to get it done!.\n\n🐶 🏈 ⚔️🏴‍☠️ 🐮🔔 🎉\n#HailState #SwingYourSword")
+    elsif  weeks_until_eggbowl > 1
+
       CLIENT.update("#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
     
     elsif weeks_until_eggbowl == 1
