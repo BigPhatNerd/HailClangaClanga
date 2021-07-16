@@ -109,8 +109,8 @@ class Bot < ApplicationRecord
   end
 
   def self.days_until_kickoff
-    kickoff = Date.new(2020, 9, 5)
-    egg_bowl = Date.new(2020, 11, 28)
+    kickoff = Date.new(2021, 9, 4)
+    egg_bowl = Date.new(2021, 11, 25)
     number_of_days =((kickoff + 1) - DateTime.now).to_i
     days_to_egg_bowl = ((egg_bowl + 1) - DateTime.now).to_i
     weeks_until_kickoff = number_of_days/7
