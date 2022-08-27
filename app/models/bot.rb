@@ -158,7 +158,12 @@ class Bot < ApplicationRecord
       if (tweet.in_reply_to_status_id? == false)
                 if (tweet_text.downcase.include? "mike leach") || (tweet_text.downcase.include? "laquinston sharp")  ||  (tweet_text.downcase.include? "will rogers") || (tweet_text.downcase.include? "cameron young") ||
           (tweet_text.downcase.include? "sack") || (tweet_text.downcase.include? "passing") || (tweet_text.downcase.include? "tulu griffin") || (tweet_text.downcase.include? "dillon johnson") || 
-          (tweet_text.downcase.include? "jaden walley")  || (tweet_text.downcase.include? "nathaniel watson") || (tweet_text.downcase.include? "tyrus wheat") || (tweet_text.downcase.include? "jo'quavious marks") || (tweet_text.downcase.include? "emmanuel forbes") 
+          (tweet_text.downcase.include? "jaden walley")  || (tweet_text.downcase.include? "nathaniel watson") || (tweet_text.downcase.include? "tyrus wheat") || (tweet_text.downcase.include? "jo'quavious marks") || (tweet_text.downcase.include? "emmanuel forbes") || 
+          (tweet_text.downcase.include? "caleb ducking") || (tweet_text.downcase.include? "austin williams") || (tweet_text.downcase.include? "woody marks") || (tweet_text.downcase.include? "dillon johnson") || (tweet_text.downcase.include? "de'monte russell") || 
+          (tweet_text.downcase.include? "cameron young") || (tweet_text.downcase.include? "randy charlton") || (tweet_text.downcase.include? "jett johnson") || (tweet_text.downcase.include? "decamerion richardson") || (tweet_text.downcase.include? "jalen green") || 
+          (tweet_text.downcase.include? "collin duncan") || (tweet_text.downcase.include? "jackie matthews") || (tweet_text.downcase.include? "trevion williams") || (tweet_text.downcase.include? "marquez dortch") || (tweet_text.downcase.include? "jacarius clayton") || 
+          (tweet_text.downcase.include? "percy lewis") || (tweet_text.downcase.include? "zavion thomas") || (tweet_text.downcase.include? "jordan morant") || (tweet_text.downcase.include? "hunter washington") || (tweet_text.downcase.include? "justin robinson") || 
+          (tweet_text.downcase.include? "jordan mosley") || (tweet_text.downcase.include? "marcus banks")
           count += 1
           puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
