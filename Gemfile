@@ -8,7 +8,6 @@ gem 'figaro'
 gem 'randumb'
 gem 'sinatra'
 gem 'twilio-ruby', '~> 5.5'
-gem 'mimemagic', '~> 0.3.10'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
