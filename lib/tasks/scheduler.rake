@@ -5,11 +5,11 @@ task hail_state_search: :environment do
   puts "Hail State Search performed!"
 end
 
-desc "Looks for Mike Leach tweets to follow"
-task mike_leach_search: :environment do
-  puts "Searching for Mike Leach tweets..."
-  Bot.mike_leach_hashtag
-  puts "Mike Leach Tweets Search performed!"
+desc "Looks for Zach Arnett tweets to follow"
+task zach_arnett_search: :environment do
+  puts "Searching for Zach Arnett tweets..."
+  Bot.zach_arnett_hashtag
+  puts "Zach Arnett Tweets Search performed!"
 end
 
 desc "Countdown to Football Season and Egg Bowl"

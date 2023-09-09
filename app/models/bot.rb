@@ -57,9 +57,9 @@ class Bot < ApplicationRecord
   end
 
 
-  def self.mike_leach_hashtag
+  def self.zach_arnett_hashtag
     count = 0
-    CLIENT.search("Mike Leach #hailstate").take(12).each do |tweet|
+    CLIENT.search("Zach Arnett #hailstate").take(12).each do |tweet|
       unless exists?(tweet_id: tweet.id)
         create!(
           tweet_id: tweet.id,
@@ -78,16 +78,11 @@ class Bot < ApplicationRecord
       Count is: #{count}\n
       ________________________"
       text = tweet.text.downcase
-      if(((text.include? "mike leach") && (text.include? "hailstate")) ||
-         ((text.include? "@coach_leach") && (text.include? "#hailstate")) ||
-         ((text.include? "mike leach") && (text.include? "love")) ||
-         ((text.include? "@coach_leach") && (text.include? "love")) ||
-         ((text.include? "mike leach") && (text.include? "starkvegas")) ||
-         ((text.include? "@coach_leach") && (text.include? "starkvegas")) ||
-         ((text.include? "mike leach") && (text.include? "air raid")) ||
-         ((text.include? "@coach_leach") && (text.include? "air raid")) ||
-         ((text.include? "swingyoursword") && (text.include? "hailstate")) ||
-         ((text.include? "pirate") && (text.include? "hailstate")))
+      if(((text.include? "zach arnett") && (text.include? "hailstate")) ||
+        (text.include? "kevin barbay") && (text.include? "hailstate")) ||
+         ((text.include? "@CoachZachArnett") && (text.include? "#hailstate")) 
+         ((text.include? "zach arnett") && (text.include? "starkvegas")) ||
+         ((text.include? "@CoachZachArnett") && (text.include? "starkvegas")) )
         count += 1
         puts "Follow person with Mike Leach tweet\n
         ________________________"
@@ -110,26 +105,26 @@ class Bot < ApplicationRecord
 
   def self.days_until_kickoff
     kickoff = Date.new(2022, 9, 3)
-    egg_bowl = Date.new(2022, 11, 24)
+    egg_bowl = Date.new(2023, 11, 23)
     number_of_days =((kickoff + 1) - DateTime.now).to_i
     days_to_egg_bowl = ((egg_bowl + 1) - DateTime.now).to_i
     weeks_until_kickoff = number_of_days/7
     weeks_until_eggbowl = days_to_egg_bowl/7
     
     if  weeks_until_kickoff > 1
-      CLIENT.update("#{weeks_until_kickoff} weeks (#{number_of_days} days) until kickoff!\n#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState")
+      CLIENT.update("#{weeks_until_kickoff} weeks (#{number_of_days} days) until kickoff!\n#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\n\n🐶 🏈 ⚔️ 🐮🔔 🎉\n#HailState")
     elsif  weeks_until_kickoff == 1
-      CLIENT.update("#{weeks_until_kickoff} week (#{number_of_days} days) until kickoff!\n#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆Time to get it done!.\n\n🐶 🏈 ⚔️🏴‍☠️ 🐮🔔 🎉\n#HailState")
+      CLIENT.update("#{weeks_until_kickoff} week (#{number_of_days} days) until kickoff!\n#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆Time to get it done!.\n\n🐶 🏈 ⚔️ 🐮🔔 🎉\n#HailState")
     elsif  weeks_until_eggbowl > 1
 
-      CLIENT.update("#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
+      CLIENT.update("#{weeks_until_eggbowl} weeks (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\n\n🐶 🏈 ⚔️ 🐮🔔 🎉\n#HailState")
     
     elsif weeks_until_eggbowl == 1
-      CLIENT.update("#{weeks_until_eggbowl} week (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\nHoly Moly.\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
+      CLIENT.update("#{weeks_until_eggbowl} week (#{days_to_egg_bowl} days) until Egg Bowl! 🥚🏆\nHoly Moly.\n\n🐶 🏈 ⚔️ 🐮🔔 🎉\n#HailState")
     elsif weeks_until_eggbowl == 0 &&  days_to_egg_bowl > 0
-      CLIENT.update("#{days_to_egg_bowl} days until Egg Bowl! 🥚🏆\nHoly Moly.\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
+      CLIENT.update("#{days_to_egg_bowl} days until Egg Bowl! 🥚🏆\nHoly Moly.\n\n🐶 🏈 ⚔️ 🐮🔔 🎉\n#HailState")
     elsif weeks_until_eggbowl == 0 && days_to_egg_bowl == 0
-      CLIENT.update("Happy Egg Bowl! 🥚🏆\nLeach vs Kiffin\nLet's do what we be doing!\n\n🐶 🏈 ⚔️ 🏴‍☠️🐮🔔 🎉\n#HailState #SwingYourSword")
+      CLIENT.update("Happy Egg Bowl! 🥚🏆\nArnett vs Kiffin\nLet's do what we be doing!\n\n🐶 🏈 ⚔️ 🐮🔔 🎉\n#HailState")
     end
 
   end
@@ -156,14 +151,14 @@ class Bot < ApplicationRecord
 
       tweet_text = tweet.text.downcase
       if (tweet.in_reply_to_status_id? == false)
-                if (tweet_text.downcase.include? "mike leach") || (tweet_text.downcase.include? "laquinston sharp")  ||  (tweet_text.downcase.include? "will rogers") || (tweet_text.downcase.include? "cameron young") ||
+                if (tweet_text.downcase.include? "zach arnett") || (tweet_text.downcase.include? "percy lewis")  ||  (tweet_text.downcase.include? "will rogers") || (tweet_text.downcase.include? "jaden crumedy") ||
           (tweet_text.downcase.include? "sack") || (tweet_text.downcase.include? "passing") || (tweet_text.downcase.include? "tulu griffin") || (tweet_text.downcase.include? "dillon johnson") || 
-          (tweet_text.downcase.include? "jaden walley")  || (tweet_text.downcase.include? "nathaniel watson") || (tweet_text.downcase.include? "tyrus wheat") || (tweet_text.downcase.include? "jo'quavious marks") || (tweet_text.downcase.include? "emmanuel forbes") || 
-          (tweet_text.downcase.include? "caleb ducking") || (tweet_text.downcase.include? "austin williams") || (tweet_text.downcase.include? "woody marks") || (tweet_text.downcase.include? "dillon johnson") || (tweet_text.downcase.include? "de'monte russell") || 
-          (tweet_text.downcase.include? "cameron young") || (tweet_text.downcase.include? "randy charlton") || (tweet_text.downcase.include? "jett johnson") || (tweet_text.downcase.include? "decamerion richardson") || (tweet_text.downcase.include? "jalen green") || 
-          (tweet_text.downcase.include? "collin duncan") || (tweet_text.downcase.include? "jackie matthews") || (tweet_text.downcase.include? "trevion williams") || (tweet_text.downcase.include? "marquez dortch") || (tweet_text.downcase.include? "jacarius clayton") || 
-          (tweet_text.downcase.include? "percy lewis") || (tweet_text.downcase.include? "zavion thomas") || (tweet_text.downcase.include? "jordan morant") || (tweet_text.downcase.include? "hunter washington") || (tweet_text.downcase.include? "justin robinson") || 
-          (tweet_text.downcase.include? "jordan mosley") || (tweet_text.downcase.include? "marcus banks")
+          (tweet_text.downcase.include? "jaden walley")  || (tweet_text.downcase.include? "marcus banks") || (tweet_text.downcase.include? "woody marks") || (tweet_text.downcase.include? "jo'quavious marks") || (tweet_text.downcase.include? "emmanuel forbes") || 
+          (tweet_text.downcase.include? "nathaniel watson") || (tweet_text.downcase.include? "simeon price") || (tweet_text.downcase.include? "creed whittemore") || (tweet_text.downcase.include? "mike wright") || (tweet_text.downcase.include? "jeffery pittman") || 
+          (tweet_text.downcase.include? "cameron young") || (tweet_text.downcase.include? "justin robinson") || (tweet_text.downcase.include? "jett johnson") || (tweet_text.downcase.include? "kalvin dinkins") || (tweet_text.downcase.include? "kyle ferrie") || 
+          (tweet_text.downcase.include? "nathan pickering") || (tweet_text.downcase.include? "jaden crumedy") || (tweet_text.downcase.include? "trevion williams") || (tweet_text.downcase.include? "nic mitchell") || (tweet_text.downcase.include? "jacarius clayton") || 
+          (tweet_text.downcase.include? "de'monte russell") || (tweet_text.downcase.include? "zavion thomas") || (tweet_text.downcase.include? "jordan morant") || (tweet_text.downcase.include? "hunter washington") || (tweet_text.downcase.include? "justin robinson") || 
+          (tweet_text.downcase.include? "nic mitchell") || (tweet_text.downcase.include? "marcus banks")
           count += 1
           puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
@@ -185,7 +180,7 @@ class Bot < ApplicationRecord
               retweets: tweet.retweet_count,
             )
           end
-      elsif (tweet_text.include? "mike leach") || (tweet_text.include? "airraid")  ||  (tweet_text.include? "will rogers") || (tweet_text.include? "davis wade") ||
+      elsif (tweet_text.include? "zach arnett")   ||  (tweet_text.include? "will rogers") || (tweet_text.include? "davis wade") ||
           (tweet_text.include? "sack") || (tweet_text.include? "passing") 
           count += 1
           puts "MATCHES RETWEET PARAMETERS\n
@@ -235,9 +230,9 @@ class Bot < ApplicationRecord
             )
           end
 
-        elsif (tweet.user.screen_name == "@Coach_Leach") || (tweet.user.screen_name == "@HailStateFB") ||
-            (tweet_text.include? "@hailstatefb") || (tweet_text.include? "@coach_leach") ||
-            (tweet_text.include? "coach leach")
+        elsif (tweet.user.screen_name == "@CoachZachArnett") || (tweet.user.screen_name == "@HailStateFB") ||
+            (tweet_text.include? "@hailstatefb") || (tweet_text.include? "@CoachZachArnett") ||
+            (tweet_text.include? "coach arnett")
           count += 1
           puts "MATCHES RETWEET PARAMETERS\n
           ________________________"
@@ -283,30 +278,6 @@ class Bot < ApplicationRecord
             )
           end
 
-        elsif (tweet_text.include? "kylin") || (tweet_text.include? "chauncey") ||
-            (tweet_text.include? "darryl williams") || (tweet_text.include? "osirus") ||
-            (tweet_text.include? "stephen guidry")
-          count += 1
-          puts "MATCHES RETWEET PARAMETERS\n
-          ________________________"
-          begin
-            CLIENT.retweet!(tweet)
-          rescue Twitter::Error::Forbidden
-            puts "Error:#{Twitter::Error::Forbidden}"
-            puts "-----RESCUED-----"
-          end
-          unless exists?(tweet_id: tweet.id)
-            create!(
-              tweet_id: tweet.id,
-              retweets_id: tweet.id,
-              content: tweet.text,
-              screen_name: tweet.user.screen_name,
-              followers_count: tweet.user.followers_count,
-              description: tweet.user.description,
-              user_id: tweet.user.id,
-              retweets: tweet.retweet_count,
-            )
-          end
 
         else
           count += 1
