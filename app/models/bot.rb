@@ -57,51 +57,59 @@ class Bot < ApplicationRecord
   end
 
 
-  def self.zach_arnett_hashtag
-    count = 0
-    CLIENT.search("Zach Arnett #hailstate").take(12).each do |tweet|
-      unless exists?(tweet_id: tweet.id)
-        create!(
-          tweet_id: tweet.id,
-          content: tweet.text,
-          screen_name: tweet.user.screen_name,
-          followers_count: tweet.user.followers_count,
-          description: tweet.user.description,
-          user_id: tweet.user.id,
-          retweets: tweet.retweet_count,
-        )
-      end
-      puts "#{tweet.text}\n
-      ________________________\n
-      This is the tweet id: #{tweet.id}\n
-      ________________________\n
-      Count is: #{count}\n
+ def self.zach_arnett_hashtag
+  count = 0
+
+  TWEET_LIMIT = 12
+  CLIENT.search("Zach Arnett #hailstate").take(TWEET_LIMIT).each do |tweet|
+    
+    unless exists?(tweet_id: tweet.id)
+      create!(
+        tweet_id: tweet.id,
+        content: tweet.text,
+        screen_name: tweet.user.screen_name,
+        followers_count: tweet.user.followers_count,
+        description: tweet.user.description,
+        user_id: tweet.user.id,
+        retweets: tweet.retweet_count,
+      )
+    end
+
+    puts "#{tweet.text}\n
+    ________________________\n
+    This is the tweet id: #{tweet.id}\n
+    ________________________\n
+    Count is: #{count}\n
+    ________________________"
+
+    text = tweet.text.downcase
+    count += 1
+
+    if (text.include?("zach arnett") && text.include?("hailstate")) ||
+       (text.include?("kevin barbay") && text.include?("hailstate")) ||
+       (text.include?("@CoachZachArnett") && text.include?("#hailstate")) ||
+       (text.include?("zach arnett") && text.include?("starkvegas")) ||
+       (text.include?("@CoachZachArnett") && text.include?("starkvegas"))
+      
+      puts "Follow person with Zach Arnett tweet\n
       ________________________"
-      text = tweet.text.downcase
-      if(((text.include? "zach arnett") && (text.include? "hailstate")) ||
-        (text.include? "kevin barbay") && (text.include? "hailstate")) ||
-         ((text.include? "@CoachZachArnett") && (text.include? "#hailstate")) 
-         ((text.include? "zach arnett") && (text.include? "starkvegas")) ||
-         ((text.include? "@CoachZachArnett") && (text.include? "starkvegas")) )
-        count += 1
-        puts "Follow person with Zach Arnett tweet\n
-        ________________________"
 
-        begin
-          CLIENT.follow("#{tweet.user.screen_name}")
-        rescue
-          puts "********************\n
-            NEEDED TO BE RESCUED\n
-            *********************"
-          Twitter::Error::Forbidden
-        end
-      else
-        count += 1
-        puts "DID NOT FOLLOW Zach Arnett tweet"
+      begin
+        CLIENT.follow(tweet.user.screen_name)
+      rescue Twitter::Error::Forbidden => e
+        warn "********************\n
+              NEEDED TO BE RESCUED: #{e.message}\n
+              *********************"
+      rescue Twitter::Error => e
+        warn "Error: #{e.message}"
       end
 
+    else
+      puts "DID NOT FOLLOW Zach Arnett tweet"
     end
   end
+end
+
 
   def self.days_until_kickoff
     kickoff = Date.new(2022, 9, 3)
