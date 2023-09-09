@@ -60,8 +60,7 @@ class Bot < ApplicationRecord
  def self.zach_arnett_hashtag
   count = 0
 
-  TWEET_LIMIT = 12
-  CLIENT.search("Zach Arnett #hailstate").take(TWEET_LIMIT).each do |tweet|
+  CLIENT.search("Zach Arnett #hailstate").take(12).each do |tweet|
     
     unless exists?(tweet_id: tweet.id)
       create!(
