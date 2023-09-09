@@ -84,6 +84,7 @@ test:
 
 production:
   <<: *default
-  database: clanga_bells_production
+  url: <%= ENV['DATABASE_URL'] %>
+
 #  username: clanga_bells
  # password: <%= ENV['CLANGA_BELLS_DATABASE_PASSWORD'] %>
