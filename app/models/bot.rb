@@ -84,7 +84,7 @@ class Bot < ApplicationRecord
          ((text.include? "zach arnett") && (text.include? "starkvegas")) ||
          ((text.include? "@CoachZachArnett") && (text.include? "starkvegas")) )
         count += 1
-        puts "Follow person with Mike Leach tweet\n
+        puts "Follow person with Zach Arnett tweet\n
         ________________________"
 
         begin
@@ -97,7 +97,7 @@ class Bot < ApplicationRecord
         end
       else
         count += 1
-        puts "DID NOT FOLLOW Mike Leach tweet"
+        puts "DID NOT FOLLOW Zach Arnett tweet"
       end
 
     end
